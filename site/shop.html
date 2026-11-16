@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shop — Orra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="mark" href="./index.html">Orra</a>
+        <nav>
+          <a href="./shop.html">Shop</a>
+          <a href="./studio.html">Studio</a>
+          <a href="./account.html">Account</a>
+          <a href="./index.html#assistant">Ask Orra</a>
+          <span>Cart <span id="cart-count">0</span></span>
+        </nav>
+      </header>
+      <h1>Shop</h1>
+      <p class="lede">The same catalog the assistant reads. Add here or ask on the floor.</p>
+      <div class="grid" id="shop-grid"></div>
+      <p><a href="./index.html#assistant">Open the assistant</a></p>
+      <footer class="site-footer"><p>Dummy prices. <a href="./index.md">Markdown copy</a></p></footer>
+    </div>
+    <script type="module">
+      import { App, CATALOG } from "./app.js";
+      const grid = document.getElementById("shop-grid");
+      for (const item of CATALOG) {
+        const article = document.createElement("article");
+        article.className = "piece";
+        article.innerHTML = `<h3>${item.name}</h3><p class="price">${item.price}</p><p>${item.summary}</p>`;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.add = item.id;
+        button.textContent = `Add ${item.name}`;
+        article.append(button);
+        grid.append(article);
+      }
+      App.page.bind();
+    </script>
+  </body>
+</html>

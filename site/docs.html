@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Docs — Orra</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header"><a class="mark" href="./index.html">Orra</a></header>
+      <h1>How Orra lets an agent act</h1>
+      <p>The agent network is data: <a href="./agent-manifest.json">agent-manifest.json</a> and <a href="./orra_concierge.network.json">orra_concierge.network.json</a>. The runtime in <code>runtime/</code> runs it in your browser with the key you paste.</p>
+      <p>Writes go through the same <code>App.page</code> methods as the buttons. Irreversible tools open a dialog that names the rollback. Deny is a visible refusal, not a silent skip.</p>
+      <p>Other sites may fetch the public files (CORS). They do not receive your LLM key. Orra Freight is a second origin on port 8081 during local demo.</p>
+      <p>Inbound agents: <code>POST /api/v1/agents/register</code> then <code>POST /mcp</code>. Token-less callers cannot checkout.</p>
+      <p><a href="./permissioned-actions.md">Permissioned actions pattern</a> · <a href="./llms.txt">llms.txt</a></p>
+    </div>
+  </body>
+</html>

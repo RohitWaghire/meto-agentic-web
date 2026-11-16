@@ -1,0 +1,8 @@
+{
+  "protocol": "nsdeploy-agent-mcp/v1",
+  "network": "orra_concierge",
+  "front_man": "orra_concierge",
+  "available": true,
+  "url": "/mcp",
+  "reason": "Same-origin MCP facade on the Astro Node host. Token-less callers may only read."
+}

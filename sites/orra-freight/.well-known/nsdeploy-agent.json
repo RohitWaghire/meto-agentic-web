@@ -1,0 +1,7 @@
+{
+  "protocol": "nsdeploy-agent-mcp/v1",
+  "network": "freight_guide",
+  "front_man": "freight_guide",
+  "available": false,
+  "reason": "Static partner bundle."
+}

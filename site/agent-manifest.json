@@ -1,0 +1,86 @@
+{
+  "brand": "Orra Assistant",
+  "networks": [
+    {
+      "name": "orra_concierge",
+      "front_man": "orra_concierge",
+      "hocon": "./orra_concierge.network.json",
+      "description": "Ask about the catalog, keep to your spend cap, and place a demo order or Studio plan after you confirm.",
+      "tags": [
+        "agentified-website",
+        "deployed",
+        "nsdeploy"
+      ],
+      "sample_queries": [
+        "What wall lights cost less than $180?",
+        "Add the Arc Sconce to my cart",
+        "Place a pickup order for the cart in my name",
+        "Track a parcel with a real carrier"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [
+    "http://127.0.0.1:8081"
+  ],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Orra Freight on loopback is the only partner until you replace the URL for production."
+  },
+  "agent_mcp": {
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "network": "orra_concierge",
+    "front_man": "orra_concierge",
+    "available": true,
+    "url": "/mcp",
+    "reason": "Same-origin MCP facade on the Astro Node host. Token-less callers may only read."
+  },
+  "theme": {
+    "primary": "#2c5749"
+  },
+  "linking": {
+    "protocol": "nsdeploy-link/v1",
+    "exports": [
+      {
+        "network": "orra_concierge",
+        "front_man": "orra_concierge",
+        "aliases": [
+          "orra_concierge"
+        ],
+        "url": "orra_concierge"
+      }
+    ],
+    "imports": [],
+    "link_updates": {
+      "mode": "browser-local"
+    }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": true
+  },
+  "actions": {
+    "version": 1,
+    "module": "./site-actions.js",
+    "bridge": "./bridge/action-bridge.html",
+    "agentTools": [
+      "get_store_state",
+      "add_to_cart",
+      "set_cart",
+      "set_constraints",
+      "checkout_order",
+      "subscribe_plan",
+      "create_api_key",
+      "undo_run"
+    ]
+  }
+}

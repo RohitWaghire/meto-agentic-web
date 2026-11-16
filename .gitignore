@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.data/
+.astro/
+.DS_Store
+*.log
+.impeccable/
+_vendor_src/

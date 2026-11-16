@@ -1,0 +1,9 @@
+{
+  "openapi": "3.1.0",
+  "info": { "title": "Orra agent API", "version": "1.0.0" },
+  "paths": {
+    "/api/v1/catalog": { "get": { "summary": "List or search catalog" } },
+    "/api/v1/agents/register": { "post": { "summary": "Register an agent tenant" } },
+    "/mcp": { "post": { "summary": "MCP JSON-RPC" } }
+  }
+}

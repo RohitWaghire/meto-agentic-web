@@ -1,0 +1,17 @@
+{
+  "protocol": "nsdeploy-link/v1",
+  "exports": [
+    {
+      "network": "freight_guide",
+      "front_man": "freight_guide",
+      "aliases": [
+        "freight_guide"
+      ],
+      "url": "freight_guide"
+    }
+  ],
+  "imports": [],
+  "link_updates": {
+    "mode": "browser-local"
+  }
+}

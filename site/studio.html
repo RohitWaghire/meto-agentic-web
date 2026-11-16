@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Studio — Orra</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="mark" href="./index.html">Orra</a>
+        <nav>
+          <a href="./shop.html">Shop</a>
+          <a href="./studio.html">Studio</a>
+          <a href="./index.html#assistant">Ask Orra</a>
+        </nav>
+      </header>
+      <h1>Orra Studio</h1>
+      <p class="lede">Dummy lighting-control SaaS. Plans and keys use the same functions the agent calls.</p>
+      <p id="subscription-status">No Studio plan.</p>
+      <div class="grid">
+        <article class="piece">
+          <h3>Starter</h3>
+          <p>$0.00 / month</p>
+          <button type="button" data-subscribe="starter">Start Starter</button>
+        </article>
+        <article class="piece">
+          <h3>Pro</h3>
+          <p>$29.00 / month</p>
+          <button type="button" data-subscribe="pro">Start Pro</button>
+        </article>
+        <article class="piece">
+          <h3>Atelier</h3>
+          <p>$79.00 / month</p>
+          <button type="button" data-subscribe="atelier">Start Atelier</button>
+        </article>
+      </div>
+      <form id="mint-key-form" class="panel">
+        <label>Key name <input name="name" maxlength="40" value="demo"></label>
+        <button type="submit">Mint dummy key</button>
+        <p class="note" id="key-note"></p>
+        <p class="note" id="studio-note"></p>
+      </form>
+      <p><a href="./index.html#assistant">Ask the assistant to start Pro</a></p>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Account — Orra</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="mark" href="./index.html">Orra</a>
+        <nav><a href="./index.html#permissions">Permissions</a></nav>
+      </header>
+      <h1>Account</h1>
+      <p>Signed in as <strong id="signed-in">Guest</strong>.</p>
+      <form id="login-form" class="panel">
+        <label>Email <input name="email" value="julian@orra.example"></label>
+        <label>Password <input name="password" type="password" value="studio1234"></label>
+        <button type="submit">Sign in</button>
+        <button type="button" class="ghost" id="logout-button">Sign out</button>
+        <p id="login-note" class="note"></p>
+      </form>
+      <p>Demo: maya@orra.example / demo1234 · julian@orra.example / studio1234 · ada@orra.example / admin1234</p>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

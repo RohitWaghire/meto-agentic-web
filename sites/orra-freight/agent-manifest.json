@@ -1,0 +1,57 @@
+{
+  "brand": "Orra Freight",
+  "networks": [
+    {
+      "name": "freight_guide",
+      "front_man": "freight_guide",
+      "hocon": "./freight_guide.network.json",
+      "description": "Dummy delivery windows for Orra. This network cannot book.",
+      "tags": ["agentified-website"],
+      "sample_queries": [
+        "What delivery windows do you offer?",
+        "How do I book a delivery?",
+        "Can you track order 123?"
+      ]
+    }
+  ],
+  "llm_router": {
+    "base_url": "https://api.otari.ai/api/v1",
+    "mock": false,
+    "byok_router": "https://api.otari.ai/api/v1"
+  },
+  "allowed_peers": [],
+  "peer_policy": {
+    "mode": "closed",
+    "deny_origins": [],
+    "note": "Freight answers questions only."
+  },
+  "agent_mcp": {
+    "protocol": "nsdeploy-agent-mcp/v1",
+    "network": "freight_guide",
+    "front_man": "freight_guide",
+    "available": false,
+    "reason": "Static partner bundle."
+  },
+  "theme": { "primary": "#2c5749" },
+  "linking": {
+    "protocol": "nsdeploy-link/v1",
+    "exports": [
+      {
+        "network": "freight_guide",
+        "front_man": "freight_guide",
+        "aliases": ["freight_guide"],
+        "url": "freight_guide"
+      }
+    ],
+    "imports": [],
+    "link_updates": { "mode": "browser-local" }
+  },
+  "deployment": {
+    "mode": "static",
+    "self_contained_runtime": true,
+    "browser_mock": false,
+    "direct_byok": true,
+    "direct_mcp_requires_cors": true,
+    "public_mcp_facade": false
+  }
+}

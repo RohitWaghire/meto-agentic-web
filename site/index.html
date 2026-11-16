@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Orra — lamps you can undo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Orra",
+        "description": "Lighting and objects with a permissioned in-browser agent.",
+        "url": "/"
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header">
+        <a class="mark" href="./index.html">Orra</a>
+        <nav>
+          <a href="./index.html">Floor</a>
+          <a href="./shop.html">Shop</a>
+          <a href="./studio.html">Studio</a>
+          <a href="./account.html">Account</a>
+          <a href="./docs.html">Docs</a>
+          <a href="./index.html#assistant">Ask Orra</a>
+          <span>Cart <span id="cart-count">0</span></span>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div>
+          <h1>Finish the errand. Keep the receipt.</h1>
+          <p class="lede">Orra sells lamps, linen and small objects. An agent can complete a purchase on this page, but only inside the cap you set, and every mutating step names how to undo it.</p>
+          <div class="chips">
+            <a href="#assistant">Ask for the Arc Sconce</a>
+            <a class="ghost" href="#permissions">Set a spend cap</a>
+          </div>
+        </div>
+        <aside class="hero-aside">
+          <p id="constraint-summary">always ask, cap $500.00</p>
+          <p>Signed in as <strong id="signed-in">Guest</strong>. Demo keys stay in your browser. Card numbers never go to the model.</p>
+        </aside>
+      </section>
+
+      <section id="shop">
+        <h2>On the bench</h2>
+        <div class="grid">
+          <article class="piece" id="piece-arc-sconce">
+            <svg viewBox="0 0 160 120" aria-hidden="true"><path class="lamp-arc" d="M20 100 C20 30 140 30 140 100"/><circle class="lamp-fill" cx="140" cy="100" r="8"/></svg>
+            <h3>Arc Sconce</h3>
+            <p class="price">$172.00</p>
+            <p>Brass and glass. Under a $180 cap.</p>
+            <button type="button" data-add="arc-sconce">Add Arc Sconce</button>
+          </article>
+          <article class="piece">
+            <svg viewBox="0 0 160 120" aria-hidden="true"><rect class="lamp-arc" x="70" y="10" width="20" height="70"/><ellipse class="lamp-fill" cx="80" cy="95" rx="36" ry="12"/></svg>
+            <h3>Mill Pendant</h3>
+            <p class="price">$240.00</p>
+            <p>Oxidized copper for a table pool of light.</p>
+            <button type="button" data-add="mill-pendant">Add Mill Pendant</button>
+          </article>
+          <article class="piece">
+            <svg viewBox="0 0 160 120" aria-hidden="true"><path class="lamp-arc" d="M80 10 V70"/><circle class="lamp-fill" cx="80" cy="88" r="22"/></svg>
+            <h3>Grove Floor Lamp</h3>
+            <p class="price">$410.00</p>
+            <p>Oak, brass, linen drum.</p>
+            <button type="button" data-add="grove-floor">Add Grove Floor Lamp</button>
+          </article>
+          <article class="piece">
+            <svg viewBox="0 0 160 120" aria-hidden="true"><path class="lamp-arc" d="M20 40 H140 V90 H20 Z"/></svg>
+            <h3>Linen Throw</h3>
+            <p class="price">$86.00</p>
+            <p>Stone linen, two-end herringbone.</p>
+            <button type="button" data-add="linen-throw">Add Linen Throw</button>
+          </article>
+          <article class="piece">
+            <svg viewBox="0 0 160 120" aria-hidden="true"><ellipse class="lamp-arc" cx="80" cy="70" rx="40" ry="18"/></svg>
+            <h3>Kiln Bowl</h3>
+            <p class="price">$54.00</p>
+            <p>Copper glaze, one handful.</p>
+            <button type="button" data-add="kiln-bowl">Add Kiln Bowl</button>
+          </article>
+          <article class="piece">
+            <svg viewBox="0 0 160 120" aria-hidden="true"><rect class="lamp-arc" x="25" y="40" width="110" height="50"/></svg>
+            <h3>North Rug</h3>
+            <p class="price">$320.00</p>
+            <p>Flatweave wool, verdigris stripe.</p>
+            <button type="button" data-add="north-rug">Add North Rug</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="work">
+        <div class="panel" id="cart">
+          <h2>Cart</h2>
+          <div id="cart-lines"><p>Cart is empty.</p></div>
+          <p>Total <strong id="cart-total">$0.00</strong></p>
+          <form id="checkout-form">
+            <label>Name
+              <input id="checkout-name" name="customerName" maxlength="80" required>
+            </label>
+            <label>Fulfillment
+              <select id="checkout-fulfillment" name="fulfillment">
+                <option value="pickup">Pickup</option>
+                <option value="delivery">Delivery</option>
+              </select>
+            </label>
+            <button type="submit">Place demo order</button>
+            <p class="note" id="checkout-note"></p>
+          <p class="note" id="action-note"></p>
+          </form>
+          <p id="latest-order">No orders yet.</p>
+          <p id="subscription-status">No Studio plan.</p>
+          <p class="note" id="key-note"></p>
+          <p class="note" id="studio-note"></p>
+          <button type="button" class="ghost" id="undo-run">Undo run</button>
+        </div>
+
+        <div class="panel" id="permissions">
+          <h2>Permissions</h2>
+          <p>The agent cannot widen this. Frozen onto each irreversible call.</p>
+          <form id="constraints-form">
+            <label>Mode
+              <select id="constraint-mode" name="mode">
+                <option value="always_ask">always_ask</option>
+                <option value="auto_within_policy">auto_within_policy</option>
+              </select>
+            </label>
+            <label>Spend cap (USD)
+              <input id="spend-cap" name="spendCap" type="number" min="0" max="10000" step="1">
+            </label>
+            <button type="submit">Save constraints</button>
+          </form>
+          <h3>Demo sign-in</h3>
+          <form id="login-form">
+            <label>Email
+              <input name="email" value="maya@orra.example">
+            </label>
+            <label>Password
+              <input name="password" type="password" value="demo1234">
+            </label>
+            <button type="submit">Sign in</button>
+            <button type="button" class="ghost" id="logout-button">Sign out</button>
+            <p class="note" id="login-note">Maya’s cap is $100, so the sconce is refused. Julian’s cap is $500.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Run timeline</h2>
+        <ul id="run-timeline">
+          <li>No agent steps yet.</li>
+        </ul>
+      </section>
+
+      <section id="assistant" class="assistant" aria-labelledby="assistant-heading">
+        <h2 id="assistant-heading">Ask Orra</h2>
+        <p>I can check prices, fill the cart, and place a demo order after you confirm. Delivery windows come from Orra Freight if you allow that origin.</p>
+        <p class="assistant-note">Your messages and this page's data go to the LLM provider you choose in the settings below. You confirm anything that cannot be undone before it happens.</p>
+        <p id="assistant-status" role="status">Connecting the assistant… If this message stays, the assistant could not load. You can still use the page directly.</p>
+        <div id="agent-app">
+          <div data-ns-slot="header"></div>
+          <div class="assistant-panels">
+            <div data-ns-slot="chat"></div>
+            <div data-ns-slot="agents"></div>
+          </div>
+          <div data-ns-slot="settings"></div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <p>Dummy catalog. No real charges. <a href="./llms.txt">llms.txt</a> · <a href="./agent-manifest.json">agent-manifest.json</a> · <a href="./docs.html">How agents act</a></p>
+        <p><a href="./about.html">About</a> · <a href="./legal.html">Terms</a> · <a href="./blog.html">Notes</a></p>
+      </footer>
+    </div>
+    <script type="module" src="./app.js"></script>
+    <script type="module" src="./site.js"></script>
+  </body>
+</html>
