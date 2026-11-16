@@ -2,6 +2,9 @@
 
 A dummy lighting shop plus Orra Studio. An agent network runs **in the browser** from published JSON. The visitor brings their own LLM key. Every irreversible step names how to undo it.
 
+- Repo: [github.com/RohitWaghire/orra-agentic-web](https://github.com/RohitWaghire/orra-agentic-web)
+- Public HTTPS: [rohitwaghire.github.io/orra-agentic-web](https://rohitwaghire.github.io/orra-agentic-web/)
+
 Hackathon: [Open Agentic Web Challenge](https://cognizant-agenticweb.devpost.com/)  
 Spec: [MVP Profile 0.2](https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md)
 
