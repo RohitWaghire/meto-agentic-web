@@ -141,16 +141,25 @@ export function handleMcp(body: Rpc, authHeader: string | null, paymentSignature
       if (paymentSignature !== "demo-usdc") {
         return { status: 200, json: error(body.id, -32002, "Unknown PAYMENT-SIGNATURE. Use demo-usdc on this dummy rail.") };
       }
-      const order = placeTwinOrder(tenant, product.id, Number(args.quantity) || 1);
-      return {
-        status: 200,
-        json: textResult(body.id, {
-          ok: true,
-          order,
-          tenant: tenant.agentName,
-          rail: "x402-shaped",
-        }),
-      };
+      let quantity = 1;
+      if (args.quantity != null && args.quantity !== "") {
+        quantity = Number(args.quantity);
+      }
+      try {
+        const order = placeTwinOrder(tenant, product.id, quantity);
+        return {
+          status: 200,
+          json: textResult(body.id, {
+            ok: true,
+            order,
+            tenant: tenant.agentName,
+            rail: "x402-shaped",
+          }),
+        };
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Checkout refused.";
+        return { status: 200, json: error(body.id, -32602, message) };
+      }
     }
     if (name === "subscribe_plan") {
       const tenant = tenantFromAuth(authHeader);

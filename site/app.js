@@ -14,6 +14,7 @@ export const CATALOG = [
     lead: "2 weeks",
     dimensions: "12 in × 6 in × 8 in",
     mark: "sconce",
+    image: "images/products/arc-sconce.jpg",
     summary: "A brass wall sconce with a glass shade that throws a long arc of light.",
     materials: "brass, mouth-blown glass",
     reviews: [
@@ -31,6 +32,7 @@ export const CATALOG = [
     lead: "3 weeks",
     dimensions: "16 in × 16 in × 14 in",
     mark: "pendant",
+    image: "images/products/mill-pendant.jpg",
     summary: "A spun-copper pendant for a table that needs a low, even pool of light.",
     materials: "oxidized copper, linen cord",
     reviews: [
@@ -47,6 +49,7 @@ export const CATALOG = [
     lead: "5 weeks",
     dimensions: "18 in × 18 in × 62 in",
     mark: "floor",
+    image: "images/products/grove-floor.jpg",
     summary: "A tall oak and brass floor lamp with a linen drum.",
     materials: "oak, brass, linen",
     reviews: [
@@ -64,6 +67,7 @@ export const CATALOG = [
     lead: "ships tomorrow",
     dimensions: "50 in × 70 in",
     mark: "throw",
+    image: "images/products/linen-throw.jpg",
     summary: "A heavy stone-linen throw woven in a two-end herringbone.",
     materials: "stone linen",
     reviews: [
@@ -80,8 +84,9 @@ export const CATALOG = [
     lead: "in the shop",
     dimensions: "6 in × 6 in × 3 in",
     mark: "bowl",
+    image: "images/products/kiln-bowl.jpg",
     summary: "A small glazed bowl for keys, clips, or a single stem.",
-    materials: "stoneware, copper glaze",
+    materials: "stoneware, kiln glaze",
     reviews: [
       { by: "J. Hart", rating: 5, text: "Holds a handful of keys without looking like a dish." },
     ],
@@ -96,6 +101,7 @@ export const CATALOG = [
     lead: "4 weeks",
     dimensions: "60 in × 96 in",
     mark: "rug",
+    image: "images/products/north-rug.jpg",
     summary: "A flatweave wool rug in verdigris and limestone stripes.",
     materials: "wool",
     reviews: [
@@ -252,8 +258,59 @@ function brandFromDigits(digits) {
   return "Card";
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 export function markSvg(kind) {
   return `<svg viewBox="0 0 160 120" aria-hidden="true">${MARK_PATHS[kind] || MARK_PATHS.bowl}</svg>`;
+}
+
+export function pieceImageUrl(path) {
+  if (!path || typeof path !== "string") return "";
+  if (path.includes("://") && !/^https?:/i.test(path)) return "";
+  try {
+    const url = new URL(path, import.meta.url);
+    if (url.protocol !== "http:" && url.protocol !== "https:" && url.protocol !== "file:") {
+      return "";
+    }
+    return url.href;
+  } catch {
+    return "";
+  }
+}
+
+export function pieceFallback(img) {
+  if (!img || img.dataset?.fallbackApplied === "1") return;
+  if (img.dataset) img.dataset.fallbackApplied = "1";
+  const mark = typeof img.getAttribute === "function" ? img.getAttribute("data-mark") : img.dataset?.mark;
+  if (typeof document !== "undefined" && typeof img.replaceWith === "function") {
+    const wrap = document.createElement("div");
+    wrap.innerHTML = markSvg(mark);
+    const svg = wrap.firstElementChild || wrap.children?.[0];
+    if (svg) {
+      img.replaceWith(svg);
+      return;
+    }
+  }
+  if (typeof img.removeAttribute === "function") img.removeAttribute("src");
+}
+
+export function pieceMedia(item, extraClass = "") {
+  const resolved = pieceImageUrl(item?.image);
+  if (!resolved) return markSvg(item?.mark);
+  const cls = ["piece-photo"];
+  if (extraClass && /^[a-z0-9-]+$/i.test(extraClass)) cls.push(extraClass);
+  const src = escapeHtml(resolved);
+  const alt = escapeHtml(item.name || "");
+  const mark = escapeHtml(item.mark || "bowl");
+  const lazy = extraClass === "hero-photo" ? "" : " loading=\"lazy\"";
+  return `<img class="${cls.join(" ")}" src="${src}" alt="${alt}" width="1400" height="933" decoding="async"${lazy} data-mark="${mark}" onerror="globalThis.metoPieceFallback&&globalThis.metoPieceFallback(this)">`;
 }
 
 function currentFile() {
@@ -329,10 +386,74 @@ export class StorePage {
     }
     try {
       const parsed = JSON.parse(raw);
-      this.state = { ...this.blankState(), ...parsed };
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        this.state = this.blankState();
+        return;
+      }
+      this.state = this.sanitizeState({ ...this.blankState(), ...parsed });
+      this.persist();
     } catch {
       this.state = this.blankState();
     }
+  }
+
+  sanitizeState(state) {
+    const blank = this.blankState();
+    const next = { ...blank, ...(state && typeof state === "object" ? state : {}) };
+    const cart = next.cart && typeof next.cart === "object" ? next.cart : blank.cart;
+    const seen = new Set();
+    const items = [];
+    for (const line of Array.isArray(cart.items) ? cart.items : []) {
+      if (!line || typeof line.id !== "string") continue;
+      const product = this.catalogItem(line.id);
+      if (!product || seen.has(line.id)) continue;
+      const qty = Number(line.quantity);
+      if (!Number.isInteger(qty) || qty < 1) continue;
+      const clamped = Math.min(qty, product.stock, 20);
+      if (clamped < 1) continue;
+      items.push({ id: line.id, quantity: clamped });
+      seen.add(line.id);
+    }
+    const version = Number(cart.version);
+    next.cart = {
+      items,
+      version: Number.isInteger(version) && version >= 0 ? version : 0,
+    };
+
+    const constraints = next.constraints && typeof next.constraints === "object" ? next.constraints : blank.constraints;
+    const cap = Number(constraints.spendCapCents);
+    next.constraints = {
+      ...blank.constraints,
+      ...constraints,
+      mode: constraints.mode === "auto_within_policy" ? "auto_within_policy" : "always_ask",
+      spendCapCents: Number.isFinite(cap) && cap >= 0 ? Math.round(cap) : blank.constraints.spendCapCents,
+      allowedTools: Array.isArray(constraints.allowedTools) ? constraints.allowedTools : blank.constraints.allowedTools,
+      allowedCategories: Array.isArray(constraints.allowedCategories)
+        ? constraints.allowedCategories
+        : blank.constraints.allowedCategories,
+    };
+    if (next.frozenConstraints && typeof next.frozenConstraints !== "object") {
+      next.frozenConstraints = null;
+    }
+
+    if (!Array.isArray(next.orders)) next.orders = [];
+    if (!Array.isArray(next.events)) next.events = [];
+    if (!Array.isArray(next.ledger)) next.ledger = [];
+    if (!Array.isArray(next.keys)) next.keys = [];
+    if (!Array.isArray(next.invoices)) next.invoices = [];
+    if (!Array.isArray(next.rooms)) next.rooms = [];
+    if (typeof next.scenesUsed !== "number" || !Number.isFinite(next.scenesUsed) || next.scenesUsed < 0) {
+      next.scenesUsed = 0;
+    }
+    if (typeof next.webhookUrl !== "string") next.webhookUrl = "";
+
+    const tender = next.tender && typeof next.tender === "object" ? next.tender : blank.tender;
+    next.tender = {
+      brand: typeof tender.brand === "string" && tender.brand ? tender.brand : "Demo",
+      last4: typeof tender.last4 === "string" && /^\d{4}$/.test(tender.last4) ? tender.last4 : "4242",
+      tender: "demo",
+    };
+    return next;
   }
 
   persist() {
@@ -418,12 +539,15 @@ export class StorePage {
   }
 
   productCard(item) {
-    return `<article class="piece">
-      <a href="product.html?id=${item.id}">${markSvg(item.mark)}</a>
-      <h3><a href="product.html?id=${item.id}">${item.name}</a></h3>
-      <p class="price">${item.price}</p>
-      <p>${item.materials}</p>
-      <button type="button" data-add="${item.id}">Add ${item.name}</button>
+    const id = encodeURIComponent(item.id);
+    const name = escapeHtml(item.name);
+    const inStock = item.stock > 0;
+    return `<article class="piece" id="piece-${escapeHtml(item.id)}">
+      <a class="piece-link" href="./product.html?id=${id}">${pieceMedia(item)}</a>
+      <h3><a href="./product.html?id=${id}">${name}</a></h3>
+      <p class="price">${escapeHtml(item.price)}</p>
+      <p>${escapeHtml(item.materials)}</p>
+      <button type="button" data-add="${escapeHtml(item.id)}"${inStock ? "" : " disabled"}>${inStock ? `Add ${name}` : "Out of stock"}</button>
     </article>`;
   }
 
@@ -470,9 +594,15 @@ export class StorePage {
   }
 
   note(text) {
-    const el = document.getElementById("action-note") || document.getElementById("checkout-note");
-    if (el) {
-      el.textContent = text || "";
+    const box = el("action-note") || el("checkout-note") || el("cart-note");
+    if (box) {
+      box.textContent = text || "";
+    }
+    try {
+      const extra = document.querySelector("[data-checkout-note]");
+      if (extra) extra.textContent = text || "";
+    } catch {
+      // StubDocument cannot search.
     }
   }
 
@@ -601,7 +731,13 @@ export class StorePage {
       if (!Number.isInteger(line.quantity) || line.quantity < 0 || line.quantity > 20) {
         return { ok: false, reason: "Each quantity must be 0 to 20.", field: "items" };
       }
+      if (line.quantity > product.stock) {
+        return { ok: false, reason: `Only ${product.stock} of ${product.name} are in stock.`, field: "items" };
+      }
       if (line.quantity > 0) {
+        if (next.some((row) => row.id === line.id)) {
+          return { ok: false, reason: `Cart already has a line for ${product.name}.`, field: "items" };
+        }
         next.push({ id: line.id, quantity: line.quantity });
       }
     }
@@ -620,6 +756,9 @@ export class StorePage {
     const line = this.state.cart.items.find((item) => item.id === id);
     if (!line) {
       return { ok: false, reason: "That item is not in the cart.", field: "id" };
+    }
+    if (!Number.isInteger(quantity) || quantity < 1) {
+      return { ok: false, reason: "Quantity must be an integer of at least 1.", field: "quantity" };
     }
     if (quantity >= line.quantity) {
       this.state.cart.items = this.state.cart.items.filter((item) => item.id !== id);
@@ -658,7 +797,16 @@ export class StorePage {
     }
     for (const line of this.state.cart.items) {
       const product = this.catalog.find((item) => item.id === line.id);
-      const gated = this.policy("checkout_order", totalCents, product ? product.category : undefined);
+      if (!product) {
+        return { ok: false, reason: "The cart holds a piece that is no longer on the floor.", field: "cart" };
+      }
+      if (!Number.isInteger(line.quantity) || line.quantity < 1) {
+        return { ok: false, reason: "A cart line has an invalid quantity.", field: "cart" };
+      }
+      if (line.quantity > product.stock) {
+        return { ok: false, reason: `Only ${product.stock} of ${product.name} are in stock.`, field: "quantity" };
+      }
+      const gated = this.policy("checkout_order", totalCents, product.category);
       if (!gated.ok) {
         return gated;
       }
@@ -1118,10 +1266,10 @@ export class StorePage {
       document.body.dataset.addBound = "1";
       document.body.addEventListener("click", (event) => {
         const button = event.target.closest("[data-add]");
-        if (!button) return;
+        if (!button || button.disabled) return;
         const result = this.addToCart(button.getAttribute("data-add"), 1);
         this.note(result.ok ? "" : result.reason);
-        const cartNote = document.getElementById("cart-note");
+        const cartNote = el("cart-note");
         if (cartNote) cartNote.textContent = result.ok ? `In the cart · ${this.getState().cart.total}` : result.reason;
       });
     }
@@ -1270,12 +1418,14 @@ export class StorePage {
     const grid = el("shop-grid");
     if (!grid) return;
     const draw = () => {
-      const category = document.getElementById("shop-category")?.value || "";
-      const max = document.getElementById("shop-max")?.value;
-      const q = (document.getElementById("shop-q")?.value || "").toLowerCase();
+      const category = el("shop-category")?.value || "";
+      const maxRaw = (el("shop-max")?.value || "").trim();
+      const max = Number(maxRaw);
+      const hasMax = maxRaw !== "" && Number.isFinite(max) && max >= 0;
+      const q = (el("shop-q")?.value || "").toLowerCase();
       const items = this.catalog.filter((item) => {
         if (category && item.category !== category) return false;
-        if (max && item.priceCents > Number(max) * 100) return false;
+        if (hasMax && item.priceCents > max * 100) return false;
         if (q && !`${item.name} ${item.summary} ${item.category} ${item.materials}`.toLowerCase().includes(q)) {
           return false;
         }
@@ -1284,6 +1434,7 @@ export class StorePage {
       grid.innerHTML = items.length
         ? items.map((item) => this.productCard(item)).join("")
         : `<p class="empty">Nothing in that cut of the floor.</p>`;
+      this.bindPieceMedia(grid);
     };
     const filters = el("shop-filters");
     if (filters && !filters.dataset.bound) {
@@ -1301,49 +1452,59 @@ export class StorePage {
     const params = new URLSearchParams(typeof location !== "undefined" ? location.search : "");
     const item = this.catalogItem(params.get("id"));
     if (!item) {
-      root.innerHTML = `<p class="empty">That piece is not on the floor. <a href="shop.html">Back to the shop.</a></p>`;
+      root.innerHTML = `<p class="empty">That piece is not on the floor. <a href="./shop.html">Back to the shop.</a></p>`;
       return;
     }
     const related = this.relatedItems(item.id);
+    const inStock = item.stock > 0;
     const jsonLd = {
       "@context": "https://schema.org",
       "@type": "Product",
       name: item.name,
       description: item.summary,
       sku: item.id,
+      image: pieceImageUrl(item.image),
       material: item.materials,
       offers: {
         "@type": "Offer",
         price: (item.priceCents / 100).toFixed(2),
         priceCurrency: "USD",
-        availability: "https://schema.org/InStock",
+        availability: inStock ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
       },
     };
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.textContent = JSON.stringify(jsonLd);
-    document.head.append(script);
+    if (document.head) {
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.textContent = JSON.stringify(jsonLd);
+      document.head.append(script);
+    }
+    try {
+      document.title = `${item.name} · meto`;
+    } catch {
+      // The Node test document has no title.
+    }
     root.innerHTML = `
       <div class="product-hero">
-        ${markSvg(item.mark)}
+        ${pieceMedia(item, "hero-photo")}
         <div>
-          <p class="kicker">${item.category}</p>
-          <h1>${item.name}</h1>
-          <p class="lede">${item.summary}</p>
-          <p class="meta">${item.price} · ${item.materials} · ${item.dimensions} · ${item.stock} in dummy stock · ${item.lead}</p>
-          <button type="button" data-add="${item.id}">Add to cart</button>
+          <p class="kicker">${escapeHtml(item.category)}</p>
+          <h1>${escapeHtml(item.name)}</h1>
+          <p class="lede">${escapeHtml(item.summary)}</p>
+          <p class="meta">${escapeHtml(item.price)} · ${escapeHtml(item.materials)} · ${escapeHtml(item.dimensions)} · ${item.stock} in dummy stock · ${escapeHtml(item.lead)}</p>
+          <button type="button" data-add="${escapeHtml(item.id)}"${inStock ? "" : " disabled"}>${inStock ? "Add to cart" : "Out of stock"}</button>
           <p class="note" id="cart-note"></p>
         </div>
       </div>
       <section>
         <h2>Notes from the floor</h2>
-        <ul class="reviews">${item.reviews.map((review) => `<li><strong>${review.by}</strong> · ${review.rating}/5<p>${review.text}</p></li>`).join("")}</ul>
+        <ul class="reviews">${item.reviews.map((review) => `<li><strong>${escapeHtml(review.by)}</strong> · ${escapeHtml(review.rating)}/5<p>${escapeHtml(review.text)}</p></li>`).join("")}</ul>
       </section>
       <section>
         <h2>Nearby</h2>
         <div class="grid">${related.map((other) => this.productCard(other)).join("")}</div>
       </section>
     `;
+    this.bindPieceMedia(root);
   }
 
   bindCartPage() {
@@ -1357,13 +1518,59 @@ export class StorePage {
     root.addEventListener("change", (event) => {
       const qty = event.target.closest("[data-qty]");
       if (!qty) return;
-      const next = Number(qty.value);
+      const id = qty.dataset.qty;
+      const product = this.catalogItem(id);
+      const raw = Number(qty.value);
+      if (!product) {
+        this.removeFromCart(id, 99);
+        this.note("That piece is no longer on the floor.");
+        return;
+      }
+      if (!Number.isFinite(raw)) {
+        const line = this.state.cart.items.find((item) => item.id === id);
+        qty.value = String(line ? line.quantity : 0);
+        this.note("Quantity must be a number.");
+        return;
+      }
+      const wanted = Math.max(0, Math.min(20, Math.trunc(raw)));
+      const next = Math.min(wanted, product.stock);
+      if (wanted > product.stock) {
+        this.note(`Only ${product.stock} of ${product.name} are in stock.`);
+      } else {
+        this.note("");
+      }
+      qty.value = String(next);
       const items = this.state.cart.items.map((line) =>
-        line.id === qty.dataset.qty ? { id: line.id, quantity: next } : line,
+        line.id === id ? { id: line.id, quantity: next } : line,
       );
-      this.setCart(items);
+      const result = this.setCart(items);
+      if (!result.ok) {
+        this.note(result.reason);
+        const line = this.state.cart.items.find((item) => item.id === id);
+        qty.value = String(line ? line.quantity : 0);
+      }
     });
-    this.bindCheckoutForm(document.getElementById("cart-checkout"));
+    this.bindCheckoutForm(el("cart-checkout"));
+  }
+
+  bindPieceMedia(root) {
+    if (typeof document === "undefined") return;
+    try {
+      const scope = root && typeof root.querySelectorAll === "function" ? root : document;
+      const images = scope.querySelectorAll("img.piece-photo");
+      for (const img of images) {
+        if (!img || img.dataset.fallbackApplied === "1") continue;
+        if (typeof img.addEventListener === "function" && img.dataset.mediaBound !== "1") {
+          img.dataset.mediaBound = "1";
+          img.addEventListener("error", () => pieceFallback(img));
+        }
+        if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) {
+          pieceFallback(img);
+        }
+      }
+    } catch {
+      // StubDocument cannot search the page.
+    }
   }
 
   bindDocs() {
@@ -1442,6 +1649,7 @@ export class StorePage {
     this.renderStudio(state);
     this.renderAccount(state);
     this.renderPermissions(state);
+    this.bindPieceMedia();
     const secretBox = document.getElementById("key-note");
     if (secretBox) {
       if (this.state.lastKeySecret && !secretBox.textContent) {
@@ -1494,19 +1702,29 @@ export class StorePage {
     root.innerHTML = `<ul class="cart-lines">${state.cart.items
       .map((line) => {
         const item = this.catalogItem(line.id);
-        if (!item) return "";
+        if (!item) {
+          const id = escapeHtml(line.id);
+          return `<li class="cart-unknown">
+            <div>
+              <p>That piece is no longer on the floor.</p>
+              <p class="meta">${id}</p>
+            </div>
+            <button type="button" data-remove="${id}">Remove</button>
+          </li>`;
+        }
         return `<li>
-          ${markSvg(item.mark)}
+          ${pieceMedia(item, "line-photo")}
           <div>
-            <a href="product.html?id=${item.id}">${item.name}</a>
-            <p class="meta">${item.price}</p>
+            <a href="./product.html?id=${encodeURIComponent(item.id)}">${escapeHtml(item.name)}</a>
+            <p class="meta">${escapeHtml(item.price)}</p>
           </div>
-          <label>Qty <input data-qty="${item.id}" type="number" min="0" value="${line.quantity}"></label>
-          <button type="button" data-remove="${item.id}">Remove</button>
+          <label>Qty <input data-qty="${escapeHtml(item.id)}" type="number" min="0" max="${item.stock}" step="1" inputmode="numeric" value="${line.quantity}"></label>
+          <button type="button" data-remove="${escapeHtml(item.id)}">Remove</button>
         </li>`;
       })
       .join("")}</ul>
-      <p class="total">Total ${state.cart.total}</p>`;
+      <p class="total">Total ${escapeHtml(state.cart.total)}</p>`;
+    this.bindPieceMedia(root);
   }
 
   renderStudio(state) {
@@ -1592,6 +1810,7 @@ export class App {
 }
 
 if (typeof window !== "undefined") {
+  globalThis.metoPieceFallback = pieceFallback;
   import("./dialogs.js")
     .then(({ confirmHuman }) => {
       StorePage.humanConfirm = confirmHuman;

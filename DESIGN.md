@@ -2,7 +2,7 @@
 
 ## World
 
-Hangline’s small-batch shop, translated onto meto's lamps: sage paper with a pin-dot grid, a forest-green script mark, garments replaced by line elevations of sconces and throws. Cool daylight on cotton-paper, not limestone benches and not a purple SaaS dashboard.
+Hangline’s small-batch shop, translated onto meto's lamps: sage paper with a pin-dot grid, a forest-green script mark, garments replaced by daylight photographs of sconces, pendants, throws and bowls. Cool daylight on cotton-paper, not limestone benches and not a purple SaaS dashboard.
 
 Light: even showroom daylight. The site is light because the rack sits on that paper.
 
@@ -32,7 +32,7 @@ Light: even showroom daylight. The site is light because the rack sits on that p
 - Product tiles are pale rounded fields with a hanging drop-shadow, not nested cards.
 - Confirmation dialogs stay paper sheets: question, sentence, definition list, two verbs named after the act.
 - Footer is a forest ticker bar using the existing shop line, not new copy.
-- Product marks remain geometric SVG elevations, not stock photos.
+- Product tiles fill the pale rounded field with a photograph of the piece, hanging drop-shadow, not nested cards.
 
 ## Motion
 

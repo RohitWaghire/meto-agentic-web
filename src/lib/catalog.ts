@@ -46,7 +46,7 @@ export const CATALOG = [
     priceCents: 5400,
     price: "$54.00",
     stock: 9,
-    materials: "stoneware, copper glaze",
+    materials: "stoneware, kiln glaze",
     dimensions: "6 in × 6 in × 3 in",
   },
   {
@@ -172,7 +172,13 @@ export function placeTwinOrder(tenant: Tenant, productId: string, quantity: numb
   if (!product) {
     throw new Error("Unknown productId");
   }
-  const qty = Number.isInteger(quantity) && quantity > 0 ? quantity : 1;
+  if (!Number.isInteger(quantity) || quantity < 1 || quantity > 20) {
+    throw new Error("Quantity must be an integer from 1 to 20.");
+  }
+  if (quantity > product.stock) {
+    throw new Error(`Only ${product.stock} of ${product.name} are in stock.`);
+  }
+  const qty = quantity;
   const totalCents = product.priceCents * qty;
   const order: TwinOrder = {
     id: `mcp_${orders.length + 1}`,

@@ -36,7 +36,7 @@ globalThis.document = StubDocument.fromHtml(await readFile(new URL("../index.htm
 // set a stand-in like this for any other browser global it uses.
 globalThis.Option = StubOption;
 const { registerActions } = await import("../site-actions.js");
-const { App } = await import("../app.js");
+const { App, pieceFallback, pieceImageUrl, pieceMedia } = await import("../app.js");
 // site.js boots the runtime only in a browser. Here it gives the dialog's words.
 const { AssistantMount } = await import("../site.js");
 // All tests in this file share this one page and run in order, as in one browser tab.
@@ -895,6 +895,100 @@ class AgentifiedSiteTest {
   }
 
   /**
+   * Catalog photos fall back, cart writes refuse over-stock, and persisted junk is
+   * dropped before checkout can see it.
+   */
+  static async testCartAndMediaEdgeCases() {
+    assert.match(pieceMedia({ name: "Ghost", mark: "bowl" }), /<svg/);
+    assert.ok(!pieceMedia({ name: "Arc", image: "javascript:alert(1)", mark: "sconce" }).includes("javascript:"));
+    const escaped = pieceMedia({
+      name: `Arc" onclick="alert(1)`,
+      image: "images/products/arc-sconce.jpg",
+      mark: "sconce",
+    });
+    assert.ok(escaped.includes("&quot;"));
+    assert.ok(!escaped.includes('onclick="alert'));
+    const injected = pieceMedia(
+      { name: "Arc", image: "images/products/arc-sconce.jpg", mark: "sconce" },
+      `hero-photo" onload="alert(1)`,
+    );
+    assert.ok(!injected.includes("onload="));
+    const url = pieceImageUrl("images/products/arc-sconce.jpg");
+    assert.ok(url.includes("images/products/arc-sconce.jpg"));
+    assert.match(url, /^(file|https?):/);
+
+    const broken = new StubElement("img");
+    broken.setAttribute("src", "missing.jpg");
+    broken.setAttribute("data-mark", "bowl");
+    pieceFallback(broken);
+    assert.equal(broken.getAttribute("src"), null);
+    assert.equal(broken.dataset.fallbackApplied, "1");
+    pieceFallback(broken);
+
+    try {
+      App.page.state = App.page.blankState();
+      const overRange = App.page.setCart([{ id: "grove-floor", quantity: 99 }]);
+      assert.equal(overRange.ok, false);
+      assert.match(overRange.reason, /0 to 20/);
+      const over = App.page.setCart([{ id: "grove-floor", quantity: 4 }]);
+      assert.equal(over.ok, false);
+      assert.match(over.reason, /in stock/);
+      assert.equal(App.page.state.cart.items.length, 0);
+
+      const unknown = App.page.setCart([{ id: "ghost-piece", quantity: 1 }]);
+      assert.equal(unknown.ok, false);
+
+      const dup = App.page.setCart([
+        { id: "arc-sconce", quantity: 1 },
+        { id: "arc-sconce", quantity: 1 },
+      ]);
+      assert.equal(dup.ok, false);
+
+      const fraction = App.page.setCart([{ id: "arc-sconce", quantity: 1.5 }]);
+      assert.equal(fraction.ok, false);
+
+      App.page.state.cart.items = [{ id: "missing-piece", quantity: 1 }];
+      App.page.state.cart.version = 1;
+      const missing = App.page.checkCheckout({
+        customerName: "Test Visitor",
+        fulfillment: "pickup",
+        expectedVersion: 1,
+      });
+      assert.equal(missing.ok, false);
+      assert.equal(missing.field, "cart");
+
+      App.page.state.cart.items = [{ id: "grove-floor", quantity: 99 }];
+      App.page.state.cart.version = 2;
+      const stockCheck = App.page.checkCheckout({
+        customerName: "Test Visitor",
+        fulfillment: "pickup",
+        expectedVersion: 2,
+      });
+      assert.equal(stockCheck.ok, false);
+
+      App.page.storage.setItem("meto.v1", JSON.stringify({
+        cart: {
+          items: [
+            { id: "ghost-piece", quantity: 2 },
+            { id: "arc-sconce", quantity: 99 },
+            { id: "arc-sconce", quantity: 2 },
+            { id: "linen-throw", quantity: 0 },
+          ],
+          version: 4,
+        },
+      }));
+      App.page.hydrate();
+      assert.equal(App.page.state.cart.items.length, 1);
+      assert.equal(App.page.state.cart.items[0].id, "arc-sconce");
+      assert.equal(App.page.state.cart.items[0].quantity, 8);
+    } finally {
+      App.page.state = App.page.blankState();
+      App.page.persist();
+      App.page.render();
+    }
+  }
+
+  /**
    * An approved irreversible call succeeds from the arranged state and stores the same
    * record as the page's own form.
    */
@@ -947,5 +1041,6 @@ test("a chat form that bundles the irreversible action runs nothing", Agentified
 test("other chat forms with several actions get the runtime's dialog", AgentifiedSiteTest.testOtherBundlesGetRuntimeDialog);
 test("the consent card gets focus, and focus then returns to the chat", AgentifiedSiteTest.testConsentFocusesTheCardThenTheChat);
 test("a visitor typing in the page's form keeps focus when a consent card appears", AgentifiedSiteTest.testConsentLeavesFocusInThePage);
+test("cart writes, hydrate, and photos refuse broken state", AgentifiedSiteTest.testCartAndMediaEdgeCases);
 // This one changes the page for good, so it runs last.
 test("an approved irreversible call stores the record", AgentifiedSiteTest.testApprovedIrreversibleCall);

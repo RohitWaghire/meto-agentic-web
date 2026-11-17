@@ -180,6 +180,14 @@ h3 { font-size: 1.2rem; margin: 0 0 0.35rem; font-style: normal; font-family: va
   color: var(--vellum);
 }
 
+button:disabled,
+button:disabled:hover {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--pitch);
+}
+
 button.ghost, a.ghost {
   background: transparent;
   color: var(--pitch);
@@ -199,14 +207,32 @@ button.ghost, a.ghost {
   min-height: 0;
 }
 
-.piece svg {
-  height: 11.5rem;
+.piece-link {
+  display: block;
+  border-radius: 18px;
+}
+
+.piece svg,
+.piece .piece-photo {
+  height: 13.5rem;
   width: 100%;
   margin-bottom: 0.85rem;
   background: color-mix(in srgb, var(--vellum) 70%, #fff);
   border-radius: 18px;
-  padding: 1.4rem;
   filter: drop-shadow(0 28px 22px rgba(30, 42, 34, 0.16));
+}
+
+.piece svg {
+  padding: 1.4rem;
+}
+
+.piece .piece-photo {
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.piece-photo[data-mark="bowl"] {
+  object-position: 18% 70%;
 }
 
 .piece p { margin: 0.15rem 0; color: var(--muted); font-size: 0.9rem; }
@@ -386,13 +412,21 @@ body > dialog button { margin-right: 8px; }
   align-items: start;
 }
 
-.product-hero svg {
+.product-hero svg,
+.product-hero .piece-photo {
   width: 100%;
   height: auto;
+  aspect-ratio: 5 / 4;
   background: color-mix(in srgb, var(--vellum) 70%, #fff);
   border-radius: 18px;
-  padding: 1.6rem;
   filter: drop-shadow(0 28px 22px rgba(30, 42, 34, 0.16));
+}
+
+.product-hero svg { padding: 1.6rem; }
+
+.product-hero .piece-photo {
+  object-fit: cover;
+  object-position: center 30%;
 }
 
 .kicker {
@@ -420,7 +454,17 @@ body > dialog button { margin-right: 8px; }
   border-top: 1px solid var(--hairline);
   padding: 0.8rem 0;
 }
-.cart-lines svg { height: 4rem; }
+.cart-lines svg,
+.cart-lines .piece-photo {
+  width: 5rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart-lines li.cart-unknown {
+  grid-template-columns: 1fr auto;
+}
 
 .meter {
   height: 0.55rem;
@@ -443,6 +487,10 @@ body > dialog button { margin-right: 8px; }
 .facts dd { margin: 0; }
 
 .empty { color: var(--muted); padding: 1.5rem 0; }
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
 
 @media (max-width: 860px) {
   .site-header {
