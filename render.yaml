@@ -1,0 +1,29 @@
+# Two public origins. GitHub Pages cannot run Node, and username.github.io/a vs /b is the same origin.
+# After the freight HTTPS URL exists, add it to site/agent-manifest.json allowed_peers and
+# site/links.json. Keep http://127.0.0.1:8081 for local `npm run freight`.
+services:
+  - type: web
+    name: orra
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /index.html
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+  - type: web
+    name: orra-freight
+    runtime: static
+    buildCommand: echo freight-static
+    staticPublishPath: sites/orra-freight
+    headers:
+      - path: /*
+        name: Access-Control-Allow-Origin
+        value: "*"
+      - path: /*
+        name: Access-Control-Allow-Methods
+        value: GET, POST, OPTIONS
+      - path: /*
+        name: Access-Control-Allow-Headers
+        value: Content-Type, Authorization, Accept, Mcp-Session-Id

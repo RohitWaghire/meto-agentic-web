@@ -1,12 +1,15 @@
 # Orra — Open Agentic Web Challenge
 
-A dummy lighting shop plus Orra Studio. An agent network runs **in the browser** from published JSON. The visitor brings their own LLM key. Every irreversible step names how to undo it.
+A dummy lighting shop plus Orra Studio. An agent network runs **in the browser** from published JSON. The visitor brings their own LLM key. Every irreversible step names how to undo it. Human buttons and `website_*` tools call the same `App.page`.
 
 - Repo: [github.com/RohitWaghire/orra-agentic-web](https://github.com/RohitWaghire/orra-agentic-web)
-- Public HTTPS: [rohitwaghire.github.io/orra-agentic-web](https://rohitwaghire.github.io/orra-agentic-web/)
+- Stage One (static): [rohitwaghire.github.io/orra-agentic-web](https://rohitwaghire.github.io/orra-agentic-web/)
+- Judge demo (local Node + freight): `npm run freight` then `npm run dev` — shop `http://localhost:4321`, partner `http://127.0.0.1:8081`
 
 Hackathon: [Open Agentic Web Challenge](https://cognizant-agenticweb.devpost.com/)  
 Spec: [MVP Profile 0.2](https://github.com/cognizant-ai-labs/agentic-web/blob/main/docs/worldwide_agentic_web_mvp_spec.md)
+
+GitHub Pages is the Stage One mirror (manifest, network JSON, runtime, assistant). MCP, register, and a true second origin need the Node host plus the freight static host in [`render.yaml`](render.yaml). Until those public HTTPS URLs exist, `allowed_peers` keeps `http://127.0.0.1:8081` so local `npm run freight` still works. Pages `username.github.io/orra` vs `username.github.io/freight` would be the **same origin**.
 
 ## Stage One files
 
@@ -40,6 +43,18 @@ npm run serve:static     # http://127.0.0.1:8080
 
 Paste an [Otari](https://otari.ai) key (or another OpenAI-compatible CORS-open router) under **AI model settings**. Default model: `alibaba/qwen3.8-flash`.
 
+## Product surfaces
+
+| Surface | What it is |
+|---|---|
+| Floor | Catalog, dummy-card checkout, seed chips into Ask Orra, run timeline |
+| Shop / product / cart | Filters, SVG marks, reviews, JSON-LD, line qty |
+| Account | Order history, saved tender last4, link to permissions |
+| Permissions | Mode, spend cap, allowed tools, freeze snapshot |
+| Studio / pricing | Starter / Pro / Atelier, usage, invoices, key prefix, dummy webhook (no POST) |
+| Docs | Spec walkthrough plus what the site cannot do |
+| Freight | Second origin. Dummy windows only. No Orra `website_*` tools |
+
 ## Demo accounts
 
 | Person | Email | Password | Cap |
@@ -48,18 +63,18 @@ Paste an [Otari](https://otari.ai) key (or another OpenAI-compatible CORS-open r
 | Julian | julian@orra.example | studio1234 | $500 |
 | Ada | ada@orra.example | admin1234 | admin |
 
-Ask: “Add the Arc Sconce and place a pickup order for Test Visitor.” Confirm the dialog. Then **Undo run**.
+Ask: “Add the Arc Sconce and place a pickup order for Test Visitor.” Confirm the dialog. Then **Undo last step** or **Undo run**.
 
-Maya cannot buy the sconce: the cap refuses before a dialog.
+Maya cannot buy the sconce: the cap refuses before a dialog. Card digits stay in the human form; the page persists `{brand, last4, tender:"demo"}`. Agents use that saved demo tender — never PAN/CVV in tool schemas.
 
 ## MCP
+
+Token-less callers may only read. Spend tools need a bearer from register. `checkout_agent` returns HTTP 402 until `PAYMENT-SIGNATURE: demo-usdc`.
 
 ```bash
 curl -X POST http://localhost:4321/api/v1/agents/register -H "content-type: application/json" -d "{\"agent_name\":\"procurement-bot-v2\"}"
 curl -X POST http://localhost:4321/mcp -H "content-type: application/json" -d "{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}"
 ```
-
-`checkout_agent` returns HTTP 402 until `PAYMENT-SIGNATURE: demo-usdc`.
 
 ## Judges
 
@@ -69,21 +84,17 @@ curl -X POST http://localhost:4321/mcp -H "content-type: application/json" -d "{
 - Screenshots in `docs/screenshots/`
 - Two-minute narration: [docs/VIDEO.md](docs/VIDEO.md)
 
-## Public host
+## Two public origins
 
-Stage One files live in `site/` (manifest, network JSON, runtime, assistant). GitHub Pages deploys that folder from `main`. The MCP facade and agent register API need the Node host:
+[`render.yaml`](render.yaml) describes a Docker web service for the Astro Node app (shop + `/mcp`) and a static service for [`sites/orra-freight/`](sites/orra-freight/).
 
 ```bash
 docker build -t orra .
-docker run -p 4321:4321 orra
+docker run -p 4321:4321 -e HOST=0.0.0.0 orra
 ```
 
-Set `HOST=0.0.0.0`. After a public URL exists, replace `http://127.0.0.1:8081` in `site/agent-manifest.json` `allowed_peers` and `site/links.json` with the freight origin.
+After a freight HTTPS URL exists, **add** it to `site/agent-manifest.json` `allowed_peers` and `site/links.json`, and keep `http://127.0.0.1:8081` for local `npm run freight`. Then `npm run agent:build`.
 
 ## License
 
 MIT for Orra. The browser runtime is Apache 2.0 (nsdeploy / Cognizant AI Lab).
-
-## Video
-
-See [docs/VIDEO.md](docs/VIDEO.md) for the two-minute narration script.

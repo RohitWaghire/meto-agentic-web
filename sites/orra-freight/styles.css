@@ -1,0 +1,68 @@
+:root {
+  --limestone: #e8ece6;
+  --vellum: #f2f4ef;
+  --pitch: #2f4034;
+  --oxide: #2f4034;
+  --hairline: #d3d3cd;
+  --muted: #5c645d;
+  --display: "Instrument Serif", "Times New Roman", serif;
+  --script: Yellowtail, "Segoe Script", cursive;
+  --sans: Inter, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background-color: var(--limestone);
+  background-image: radial-gradient(circle, #c5cbc0 0.85px, transparent 1px);
+  background-size: 16px 16px;
+  color: var(--pitch);
+  font: 16px/1.5 var(--sans);
+}
+
+::selection {
+  background: var(--pitch);
+  color: var(--vellum);
+}
+
+.wrap {
+  width: min(40rem, calc(100% - 2.5rem));
+  margin: 2rem auto 3rem;
+}
+
+.mark {
+  font-family: var(--script);
+  font-size: 2.2rem;
+  color: var(--pitch);
+  text-decoration: none;
+}
+
+h1, h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+h1 { font-size: clamp(2.2rem, 6vw, 3.4rem); max-width: 12ch; }
+
+.lede {
+  font-family: var(--display);
+  font-style: italic;
+  color: var(--muted);
+  max-width: 42ch;
+}
+
+.panel {
+  background: color-mix(in srgb, var(--vellum) 82%, #fff);
+  border-radius: 18px;
+  padding: 1.2rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+dl { display: grid; grid-template-columns: 8rem 1fr; gap: 0.4rem 1rem; }
+dt { font-weight: 600; }
+dd { margin: 0; }
+
+a { color: var(--oxide); }

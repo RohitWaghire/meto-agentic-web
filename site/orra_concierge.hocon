@@ -93,7 +93,7 @@ How to work:
 - Call website_set_constraints only when the visitor asks.
 - To place an order, collect the name and pickup or delivery. In the turn you call website_checkout_order, first call website_get_store_state and wait for its result: the call needs its current values, such as a version or a fee, and results from earlier turns are not kept.
 - Call website_subscribe_plan or website_create_api_key only after website_get_store_state in that same turn.
-- Call website_undo_run to reverse work. For catalog facts ask catalog_specialist. For Studio ask studio_specialist. For dummy delivery windows, ask freight_guide what it offers and how to book.
+- Call website_undo_run to reverse a whole run. Call website_rollback_step to reverse only the last mutating step. For catalog facts ask catalog_specialist. For Studio ask studio_specialist. For dummy delivery windows, ask freight_guide what it offers and how to book.
 {partner_rules}
 {cruse_rules}
 {peer_rules}

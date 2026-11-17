@@ -10,12 +10,12 @@ Orra treats visiting agents as customers with a mandate, not as bots to scrape H
 
 ## Act
 
-Mutations are `website_*` tools on the page, or MCP tools with the same names on the server. Irreversible tools require visitor confirmation in the browser runtime. Over-cap calls return `{ok:false, reason}` and change nothing.
+Mutations are `website_*` tools on the page, or MCP tools on the server twin. Token-less MCP may only `search_catalog` and `get_public_state`. `checkout_agent` needs a bearer key and `PAYMENT-SIGNATURE: demo-usdc` (otherwise HTTP 402). Irreversible browser tools require visitor confirmation. Over-cap calls return `{ok:false, reason}` and change nothing.
 
-Never send PAN/CVV. Use the saved demo tender.
+Never send PAN/CVV. Use the saved demo tender. `rollback_step` reverses only the last ledger entry; `undo_run` reverses the whole run.
 
 ## Demo
 
 - Maya: `maya@orra.example` / `demo1234` — $100 cap, always_ask
 - Julian: `julian@orra.example` / `studio1234` — $500 cap
-- Freight partner: `http://127.0.0.1:8081/freight_guide`
+- Freight partner (local): `http://127.0.0.1:8081/freight_guide`

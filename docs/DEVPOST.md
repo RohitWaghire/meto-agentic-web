@@ -8,7 +8,7 @@ Agent commerce today is a chatbot that might spend your money. The Open Agentic 
 
 ## What we built
 
-Orra is a dummy lighting shop plus Orra Studio. The concierge network is HOCON data. It runs in the visitor’s browser from the official agentify-website runtime. Otari is the default router; BYOK is on the page. `website_*` tools call the same `App.page` methods as the human buttons. Spend caps live in the page object, not the model. Irreversible calls open a dialog that names the compensating rollback. Undo walks the ledger in reverse.
+Orra is a dummy lighting shop plus Orra Studio. The concierge network is HOCON data. It runs in the visitor’s browser from the official agentify-website runtime. Otari is the default router; BYOK is on the page. `website_*` tools call the same `App.page` methods as the human buttons. Spend caps live in the page object, not the model. Irreversible calls open a dialog that names the compensating rollback. Undo walks the ledger in reverse; rollback_step reverses only the last entry.
 
 A second origin, Orra Freight, quotes dummy delivery windows after consent. A same-origin MCP facade lets other agents register and start a policy-bound checkout (HTTP 402 until a dummy payment signature). Card numbers never appear in tool schemas.
 

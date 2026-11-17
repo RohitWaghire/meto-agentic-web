@@ -2,14 +2,31 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Orra Freight</title>
-    <style>
-      body { font: 16px/1.5 sans-serif; max-width: 40rem; margin: 2rem auto; color: #121916; background: #d5dbd6; }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
-    <h1>Orra Freight</h1>
-    <p>Dummy partner network for the Open Agentic Web demo. Local 3–5 days at $18. Express 1–2 days at $42. No bookings.</p>
-    <p>Network: <a href="./agent-manifest.json">agent-manifest.json</a></p>
+    <div class="wrap">
+      <header>
+        <a class="mark" href="./index.html">Orra Freight</a>
+      </header>
+      <h1>Windows, not bookings.</h1>
+      <p class="lede">A dummy partner desk for the Open Agentic Web demo. Orra’s concierge may ask this origin for delivery windows after you allow it. This site has no Orra shop tools and will not take a name, a card, or a booking.</p>
+      <section class="panel">
+        <h2>Dummy windows</h2>
+        <dl>
+          <dt>Local van</dt>
+          <dd>3–5 days · $18</dd>
+          <dt>Express</dt>
+          <dd>1–2 days · $42</dd>
+        </dl>
+        <p>No live carrier quotes. No tracking. Ask Orra to place the order; this desk only answers what it offers.</p>
+      </section>
+      <p>Network: <a href="./agent-manifest.json">agent-manifest.json</a> · <a href="./freight_guide.network.json">freight_guide.network.json</a></p>
+    </div>
   </body>
 </html>

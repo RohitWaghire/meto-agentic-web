@@ -4,18 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Docs — Orra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="wrap">
-      <header class="site-header"><a class="mark" href="./index.html">Orra</a></header>
+      <header class="site-header" id="site-header"></header>
       <h1>How Orra lets an agent act</h1>
       <p>The agent network is data: <a href="./agent-manifest.json">agent-manifest.json</a> and <a href="./orra_concierge.network.json">orra_concierge.network.json</a>. The runtime in <code>runtime/</code> runs it in your browser with the key you paste.</p>
       <p>Writes go through the same <code>App.page</code> methods as the buttons. Irreversible tools open a dialog that names the rollback. Deny is a visible refusal, not a silent skip.</p>
-      <p>Other sites may fetch the public files (CORS). They do not receive your LLM key. Orra Freight is a second origin on port 8081 during local demo.</p>
-      <p>Inbound agents: <code>POST /api/v1/agents/register</code> then <code>POST /mcp</code>. Token-less callers cannot checkout.</p>
+      <p>Other sites may fetch the public files (CORS). They do not receive your LLM key. Orra Freight is a second origin — locally <code>http://127.0.0.1:8081</code>, and a public HTTPS host when deployed.</p>
+      <p>Inbound agents: <code>POST /api/v1/agents/register</code> then <code>POST /mcp</code>. Token-less callers may only read. <code>checkout_agent</code> answers HTTP 402 until <code>PAYMENT-SIGNATURE: demo-usdc</code>.</p>
+      <h2>What this site cannot do</h2>
+      <ul id="cannot-do"></ul>
       <p><a href="./permissioned-actions.md">Permissioned actions pattern</a> · <a href="./llms.txt">llms.txt</a></p>
+      <footer class="site-footer" id="site-footer"></footer>
     </div>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

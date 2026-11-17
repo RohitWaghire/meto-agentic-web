@@ -16,5 +16,10 @@ Orra is an Open Agentic Web site. Agents run in the visitor's browser from publi
 
 - [Floor](./index.html)
 - [Shop](./shop.html)
+- [Product](./product.html)
+- [Cart](./cart.html)
 - [Studio](./studio.html)
+- [Pricing](./pricing.html)
+- [Account](./account.html)
+- [Permissions](./permissions.html)
 - [Docs](./docs.html)

@@ -26,7 +26,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept, Mcp-Session-Id",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, Accept, Mcp-Session-Id, PAYMENT-SIGNATURE",
       },
     });
   }
@@ -34,7 +34,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   if (wantsCors(context.url.pathname)) {
     response.headers.set("Access-Control-Allow-Origin", "*");
     response.headers.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Mcp-Session-Id");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Mcp-Session-Id, PAYMENT-SIGNATURE");
   }
   return response;
 });

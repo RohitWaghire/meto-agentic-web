@@ -2,34 +2,37 @@
 
 ## World
 
-A north-lit metal shop that makes lamps: cool limestone benches, oxidized copper, brass fittings, ink drawings pinned with clips. Not a cream-and-terracotta boutique and not a purple SaaS dashboard.
+Hangline’s small-batch shop, translated onto Orra’s lamps: sage paper with a pin-dot grid, a forest-green script mark, garments replaced by line elevations of sconces and throws. Cool daylight on cotton-paper, not limestone benches and not a purple SaaS dashboard.
 
-Light: cool daylight on stone, tungsten on metal. The site is light because the work happens on a desk in that room.
+Light: even showroom daylight. The site is light because the rack sits on that paper.
 
 ## Type
 
-- Display: **Bodoni Moda** — engraved plaque lettering on a lamp maker's door.
-- Body / UI: **Libre Franklin** — workshop labels and invoices.
-- Numerals in money and versions are tabular.
+- Mark: **Yellowtail** — the Hangline script, now spelling meto.
+- Display: **Instrument Serif** italic — drop titles and section heads.
+- Body / UI: **Inter** — labels, nav, prices. Numerals in money are tabular.
 
 ## Color
 
-- Ground `limestone` `#d5dbd6`
-- Ink `pitch` `#121916`
-- Panel `vellum` `#eef1ee`
-- Verdigris `oxide` `#2c5749` (primary actions, links)
-- Brass `fitting` `#8d7040` (rare, for live agent status)
-- Danger `ember` `#8a2f2a`
-- Rule `hairline` `#b7c0ba`
+- Ground `limestone` `#e8ece6` (Hangline sage paper)
+- Ink `pitch` `#2f4034`
+- Panel `vellum` `#f2f4ef`
+- Forest `oxide` `#2f4034` (primary actions, ticker, links)
+- Fitting `fitting` `#3e5444` (lamp fills)
+- Danger `ember` `#a2403b`
+- Rule `hairline` `#d3d3cd`
+- Muted `muted` `#5c645d`
 
-`--ns-primary` and `--ns-accent` for the assistant are oxide, dark enough for white text.
+`--ns-primary` and `--ns-accent` for the assistant are forest, dark enough for white text.
 
 ## Components
 
-- Hairline rules, not cards-in-cards.
-- 12px corners on panels; pills only on small status chips.
-- Confirmation dialogs are paper sheets: question, sentence, definition list, technical details, two verbs named after the act.
-- Product marks are geometric SVG elevations, not stock photos.
+- Centered script mark; tracked uppercase nav split left and right.
+- Outline pills for actions; filled forest only on hover.
+- Product tiles are pale rounded fields with a hanging drop-shadow, not nested cards.
+- Confirmation dialogs stay paper sheets: question, sentence, definition list, two verbs named after the act.
+- Footer is a forest ticker bar using the existing shop line, not new copy.
+- Product marks remain geometric SVG elevations, not stock photos.
 
 ## Motion
 

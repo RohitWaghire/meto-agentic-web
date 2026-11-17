@@ -6,42 +6,30 @@
     <title>Shop — Orra</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <div class="wrap">
-      <header class="site-header">
-        <a class="mark" href="./index.html">Orra</a>
-        <nav>
-          <a href="./shop.html">Shop</a>
-          <a href="./studio.html">Studio</a>
-          <a href="./account.html">Account</a>
-          <a href="./index.html#assistant">Ask Orra</a>
-          <span>Cart <span id="cart-count">0</span></span>
-        </nav>
-      </header>
+      <header class="site-header" id="site-header"></header>
       <h1>Shop</h1>
-      <p class="lede">The same catalog the assistant reads. Add here or ask on the floor.</p>
+      <p class="lede">The same catalog the assistant reads. Filter by what the floor actually holds.</p>
+      <form id="shop-filters" class="filters">
+        <label>Search <input id="shop-q" name="q" type="search"></label>
+        <label>Category
+          <select id="shop-category">
+            <option value="">All</option>
+            <option value="lighting">Lighting</option>
+            <option value="textiles">Textiles</option>
+            <option value="objects">Objects</option>
+          </select>
+        </label>
+        <label>Max $ <input id="shop-max" type="number" min="0" step="1"></label>
+      </form>
+      <p class="note" id="cart-note"></p>
       <div class="grid" id="shop-grid"></div>
-      <p><a href="./index.html#assistant">Open the assistant</a></p>
-      <footer class="site-footer"><p>Dummy prices. <a href="./index.md">Markdown copy</a></p></footer>
+      <footer class="site-footer" id="site-footer"></footer>
     </div>
-    <script type="module">
-      import { App, CATALOG } from "./app.js";
-      const grid = document.getElementById("shop-grid");
-      for (const item of CATALOG) {
-        const article = document.createElement("article");
-        article.className = "piece";
-        article.innerHTML = `<h3>${item.name}</h3><p class="price">${item.price}</p><p>${item.summary}</p>`;
-        const button = document.createElement("button");
-        button.type = "button";
-        button.dataset.add = item.id;
-        button.textContent = `Add ${item.name}`;
-        article.append(button);
-        grid.append(article);
-      }
-      App.page.bind();
-    </script>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

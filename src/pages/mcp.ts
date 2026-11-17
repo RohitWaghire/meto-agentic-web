@@ -25,6 +25,6 @@ export const POST: APIRoute = async ({ request }) => {
 };
 
 export const GET: APIRoute = () =>
-  new Response(JSON.stringify({ ok: true, protocol: "mcp", tools: ["search_catalog", "checkout_agent", "list_runs"] }), {
+  new Response(JSON.stringify({ ok: true, protocol: "mcp", tools: ["search_catalog", "get_public_state", "checkout_agent", "subscribe_plan"] }), {
     headers: { "Content-Type": "application/json" },
   });

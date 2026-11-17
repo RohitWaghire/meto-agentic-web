@@ -1,0 +1,16 @@
+/*
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type, Authorization, Accept, Mcp-Session-Id
+
+/agent-manifest.json
+  Access-Control-Allow-Origin: *
+
+/freight_guide.network.json
+  Access-Control-Allow-Origin: *
+
+/links.json
+  Access-Control-Allow-Origin: *
+
+/.well-known/*
+  Access-Control-Allow-Origin: *

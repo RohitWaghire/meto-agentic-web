@@ -11,8 +11,15 @@ export const CATALOG = [
     priceCents: 17200,
     price: "$172.00",
     stock: 8,
+    lead: "2 weeks",
+    dimensions: "12 in × 6 in × 8 in",
+    mark: "sconce",
     summary: "A brass wall sconce with a glass shade that throws a long arc of light.",
     materials: "brass, mouth-blown glass",
+    reviews: [
+      { by: "N. Patel", rating: 5, text: "Hung two in a dark corridor. The shade is quieter than the photo." },
+      { by: "L. Chen", rating: 4, text: "Brass arrived with a fingerprint. Wiped clean. Warm throw." },
+    ],
   },
   {
     id: "mill-pendant",
@@ -21,8 +28,14 @@ export const CATALOG = [
     priceCents: 24000,
     price: "$240.00",
     stock: 5,
+    lead: "3 weeks",
+    dimensions: "16 in × 16 in × 14 in",
+    mark: "pendant",
     summary: "A spun-copper pendant for a table that needs a low, even pool of light.",
     materials: "oxidized copper, linen cord",
+    reviews: [
+      { by: "A. Ruiz", rating: 5, text: "The pool on the table is even. Cord is the right dull green." },
+    ],
   },
   {
     id: "grove-floor",
@@ -31,8 +44,15 @@ export const CATALOG = [
     priceCents: 41000,
     price: "$410.00",
     stock: 3,
+    lead: "5 weeks",
+    dimensions: "18 in × 18 in × 62 in",
+    mark: "floor",
     summary: "A tall oak and brass floor lamp with a linen drum.",
     materials: "oak, brass, linen",
+    reviews: [
+      { by: "M. Cole", rating: 5, text: "Heavy base. Does not wander on oak floors." },
+      { by: "S. Iyer", rating: 4, text: "Drum is larger than I expected. Good." },
+    ],
   },
   {
     id: "linen-throw",
@@ -41,8 +61,14 @@ export const CATALOG = [
     priceCents: 8600,
     price: "$86.00",
     stock: 12,
+    lead: "ships tomorrow",
+    dimensions: "50 in × 70 in",
+    mark: "throw",
     summary: "A heavy stone-linen throw woven in a two-end herringbone.",
     materials: "stone linen",
+    reviews: [
+      { by: "K. Bose", rating: 5, text: "Looks used on day one, which is the point." },
+    ],
   },
   {
     id: "kiln-bowl",
@@ -51,8 +77,14 @@ export const CATALOG = [
     priceCents: 5400,
     price: "$54.00",
     stock: 9,
+    lead: "in the shop",
+    dimensions: "6 in × 6 in × 3 in",
+    mark: "bowl",
     summary: "A small glazed bowl for keys, clips, or a single stem.",
     materials: "stoneware, copper glaze",
+    reviews: [
+      { by: "J. Hart", rating: 5, text: "Holds a handful of keys without looking like a dish." },
+    ],
   },
   {
     id: "north-rug",
@@ -61,15 +93,22 @@ export const CATALOG = [
     priceCents: 32000,
     price: "$320.00",
     stock: 4,
+    lead: "4 weeks",
+    dimensions: "60 in × 96 in",
+    mark: "rug",
     summary: "A flatweave wool rug in verdigris and limestone stripes.",
     materials: "wool",
+    reviews: [
+      { by: "P. Ng", rating: 4, text: "Stripe is quieter in person. Sheds once, then sits." },
+      { by: "R. Adeyemi", rating: 5, text: "The verdigris matches the sconce brass after a week." },
+    ],
   },
 ];
 
 export const PLANS = [
-  { id: "starter", name: "Studio Starter", priceCents: 0, price: "$0.00 / month", summary: "Scene library for one room." },
-  { id: "pro", name: "Studio Pro", priceCents: 2900, price: "$29.00 / month", summary: "API access, three rooms, usage logs." },
-  { id: "atelier", name: "Studio Atelier", priceCents: 7900, price: "$79.00 / month", summary: "Unlimited rooms, webhooks, priority fixtures." },
+  { id: "starter", name: "Starter", priceCents: 2900, price: "$29.00 / month", sceneCap: 12, rooms: 1, summary: "One room, twelve scenes a month, one API key." },
+  { id: "pro", name: "Pro", priceCents: 7900, price: "$79.00 / month", sceneCap: 80, rooms: 4, summary: "Four rooms, eighty scenes, three keys, dummy webhook." },
+  { id: "atelier", name: "Atelier", priceCents: 19000, price: "$190.00 / month", sceneCap: 400, rooms: 12, summary: "The whole floor. Four hundred scenes, ten keys, a named desk." },
 ];
 
 export const DEMO_USERS = [
@@ -132,13 +171,42 @@ export const DEMO_USERS = [
   },
 ];
 
-const CANNOT_DO = [
+export const CANNOT_DO = [
   "live shipping quotes from a carrier",
   "real card charges or bank transfers",
   "coupon codes",
   "gift wrap",
   "order tracking after the demo refund",
+  "call a live webhook",
+  "issue a production API secret that talks to the internet",
+  "change another visitor's cart",
+  "bypass the spend cap or the allowed-tools list",
+  "store a PAN or CVV on the page or in a tool argument",
 ];
+
+const NAV = [
+  { href: "index.html", label: "Floor" },
+  { href: "shop.html", label: "Shop" },
+  { href: "studio.html", label: "Studio" },
+  { href: "account.html", label: "Account" },
+  { href: "docs.html", label: "Docs" },
+  { href: "index.html#assistant", label: "Ask Orra" },
+];
+
+const SEED_CHIPS = [
+  { prompt: "Buy a wall sconce under $180" },
+  { prompt: "Start Studio Pro and mint a key named demo" },
+  { prompt: "Reorder my last throw if in stock" },
+];
+
+const MARK_PATHS = {
+  sconce: '<path class="lamp-arc" d="M20 100 C20 30 140 30 140 100"/><circle class="lamp-fill" cx="140" cy="100" r="8"/>',
+  pendant: '<rect class="lamp-arc" x="70" y="10" width="20" height="70"/><ellipse class="lamp-fill" cx="80" cy="95" rx="36" ry="12"/>',
+  floor: '<path class="lamp-arc" d="M80 10 V70"/><circle class="lamp-fill" cx="80" cy="88" r="22"/>',
+  throw: '<path class="lamp-arc" d="M20 40 H140 V90 H20 Z"/>',
+  bowl: '<ellipse class="lamp-arc" cx="80" cy="70" rx="40" ry="18"/>',
+  rug: '<rect class="lamp-arc" x="25" y="40" width="110" height="50"/>',
+};
 
 const DEFAULT_CONSTRAINTS = {
   mode: "always_ask",
@@ -177,6 +245,36 @@ function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
+function brandFromDigits(digits) {
+  if (digits.startsWith("4")) return "Visa";
+  if (digits.startsWith("5")) return "Mastercard";
+  if (digits.startsWith("3")) return "Amex";
+  return "Card";
+}
+
+export function markSvg(kind) {
+  return `<svg viewBox="0 0 160 120" aria-hidden="true">${MARK_PATHS[kind] || MARK_PATHS.bowl}</svg>`;
+}
+
+function currentFile() {
+  if (typeof location === "undefined") return "index.html";
+  return location.pathname.split("/").pop() || "index.html";
+}
+
+function routerHost() {
+  if (typeof location === "undefined") return "localhost";
+  return location.host;
+}
+
+function el(id) {
+  if (typeof document === "undefined") return null;
+  try {
+    return document.getElementById(id);
+  } catch {
+    return null;
+  }
+}
+
 function memoryStorage() {
   const data = new Map();
   return {
@@ -193,6 +291,8 @@ function memoryStorage() {
 }
 
 export class StorePage {
+  static humanConfirm = null;
+
   constructor() {
     this.storage = typeof localStorage === "undefined" ? memoryStorage() : localStorage;
     this.catalog = clone(CATALOG);
@@ -213,6 +313,12 @@ export class StorePage {
       lastKeySecret: null,
       ledger: [],
       events: [],
+      tender: { brand: "Demo", last4: "4242", tender: "demo" },
+      mandate: null,
+      invoices: [],
+      rooms: [],
+      scenesUsed: 0,
+      webhookUrl: "",
     };
   }
 
@@ -273,13 +379,52 @@ export class StorePage {
   }
 
   recordEvent(kind, detail) {
+    const safe = { ...(detail || {}) };
+    delete safe.secret;
+    delete safe.secretOnce;
+    delete safe.number;
+    delete safe.cvv;
+    delete safe.pan;
     this.state.events.unshift({
       id: `evt_${this.state.events.length + 1}_${Date.now()}`,
       at: new Date().toISOString(),
       kind,
-      detail,
+      host: routerHost(),
+      detail: safe,
     });
     this.state.events = this.state.events.slice(0, 40);
+  }
+
+  catalogItem(id) {
+    return this.catalog.find((item) => item.id === id) || null;
+  }
+
+  relatedItems(id) {
+    const item = this.catalogItem(id);
+    if (!item) return this.catalog.slice(0, 3);
+    return this.catalog
+      .filter((other) => other.id !== id && other.category === item.category)
+      .concat(this.catalog.filter((other) => other.id !== id && other.category !== item.category))
+      .slice(0, 3);
+  }
+
+  roomsForPlan(plan) {
+    const names = ["Dawn room", "Hall", "Study", "North gallery", "Office", "Terrace", "Loft", "Court", "Annex", "Yard", "Well", "Desk"];
+    return names.slice(0, plan.rooms).map((name, index) => ({
+      id: `room_${index + 1}`,
+      name,
+      scenes: index === 0 ? ["Dawn", "Dusk"] : ["Idle"],
+    }));
+  }
+
+  productCard(item) {
+    return `<article class="piece">
+      <a href="product.html?id=${item.id}">${markSvg(item.mark)}</a>
+      <h3><a href="product.html?id=${item.id}">${item.name}</a></h3>
+      <p class="price">${item.price}</p>
+      <p>${item.materials}</p>
+      <button type="button" data-add="${item.id}">Add ${item.name}</button>
+    </article>`;
   }
 
   pushLedger(entry) {
@@ -375,8 +520,24 @@ export class StorePage {
         total: money(totalCents),
       },
       latestOrder,
+      orders: clone(this.state.orders),
       subscription: this.state.subscription,
       latestKey,
+      keys: this.state.keys.map((key) => ({
+        id: key.id,
+        name: key.name,
+        prefix: key.prefix,
+        createdAt: key.createdAt,
+      })),
+      invoices: clone(this.state.invoices),
+      rooms: clone(this.state.rooms),
+      scenesUsed: this.state.scenesUsed,
+      sceneCap: this.state.subscription?.sceneCap || 0,
+      webhookUrl: this.state.webhookUrl,
+      tender: this.state.tender
+        ? { brand: this.state.tender.brand, last4: this.state.tender.last4, tender: "demo" }
+        : null,
+      mandate: this.state.mandate ? { kind: "demo-jwt" } : null,
       ledger: clone(this.state.ledger),
       events: clone(this.state.events).slice(0, 12),
       cannotDo: CANNOT_DO.slice(),
@@ -535,7 +696,8 @@ export class StorePage {
       total: check.total,
       totalCents: check.totalCents,
       status: "received",
-      tender: "demo",
+      tender: clone(this.state.tender || { brand: "Demo", last4: "4242", tender: "demo" }),
+      mandate: this.state.mandate ? { kind: "demo-jwt" } : null,
       createdAt: new Date().toISOString(),
     };
     const snapshot = clone(this.state.cart.items);
@@ -588,26 +750,43 @@ export class StorePage {
     }
     this.freezeConstraints();
     const previous = this.state.subscription;
+    const previousRooms = clone(this.state.rooms);
+    const previousInvoices = clone(this.state.invoices);
+    const previousUsed = this.state.scenesUsed;
+    const plan = this.plans.find((item) => item.id === check.planId);
+    const invoice = {
+      id: `inv_${String(this.state.invoices.length + 1).padStart(3, "0")}`,
+      planName: check.planName,
+      total: check.total,
+      totalCents: check.totalCents,
+      status: "paid",
+      at: new Date().toISOString(),
+    };
     this.state.subscription = {
       planId: check.planId,
       planName: check.planName,
       price: check.total,
+      sceneCap: plan.sceneCap,
+      rooms: plan.rooms,
       status: "active",
       startedAt: new Date().toISOString(),
     };
+    this.state.rooms = this.roomsForPlan(plan);
+    this.state.scenesUsed = Math.min(this.state.scenesUsed, plan.sceneCap);
+    this.state.invoices.unshift(invoice);
     this.pushLedger({
       id: `led_${this.state.ledger.length + 1}`,
       tool: "subscribe_plan",
       args: { planId: check.planId },
       rollback: {
         action: "cancel_subscription",
-        args: { previous },
+        args: { previous, rooms: previousRooms, invoices: previousInvoices, scenesUsed: previousUsed },
         label: `Cancel ${check.planName}`,
       },
     });
     this.persist();
     this.render();
-    return { ok: true, subscription: clone(this.state.subscription) };
+    return { ok: true, subscription: clone(this.state.subscription), invoice };
   }
 
   checkCreateKey(args) {
@@ -693,6 +872,84 @@ export class StorePage {
     return { ok: true, undone: check.steps };
   }
 
+  checkRollbackStep() {
+    const entry = this.state.ledger[this.state.ledger.length - 1];
+    if (!entry) {
+      return { ok: false, reason: "There is no last step to reverse." };
+    }
+    const gated = this.policy("rollback_step", 0);
+    if (!gated.ok) {
+      return gated;
+    }
+    return {
+      ok: true,
+      step: entry.rollback.label,
+      rollback: entry.rollback.label,
+    };
+  }
+
+  rollbackStep() {
+    const check = this.checkRollbackStep();
+    if (!check.ok) {
+      if (!check.field) {
+        this.recordEvent("denied", { tool: "rollback_step", reason: check.reason });
+        this.persist();
+        this.render();
+      }
+      return check;
+    }
+    const entry = this.state.ledger.pop();
+    this.applyRollback(entry.rollback);
+    if (!this.state.ledger.length) {
+      this.state.frozenConstraints = null;
+    }
+    this.recordEvent("rollback_step", { tool: entry.tool, rollback: entry.rollback.label });
+    this.persist();
+    this.render();
+    return { ok: true, reversed: entry.rollback.label };
+  }
+
+  saveHumanTender({ number, expiry, cvv } = {}) {
+    const digits = String(number || "").replace(/\D/g, "");
+    if (digits.length < 13 || digits.length > 19) {
+      return { ok: false, reason: "Enter a dummy card number between 13 and 19 digits. Nothing is charged." };
+    }
+    if (!String(expiry || "").match(/^\d{2}\s*\/\s*\d{2}$/)) {
+      return { ok: false, reason: "Expiry should look like MM/YY." };
+    }
+    if (!String(cvv || "").match(/^\d{3,4}$/)) {
+      return { ok: false, reason: "CVV is three or four dummy digits. It is not stored." };
+    }
+    this.state.tender = {
+      brand: brandFromDigits(digits),
+      last4: digits.slice(-4),
+      tender: "demo",
+    };
+    this.persist();
+    return { ok: true, tender: clone(this.state.tender) };
+  }
+
+  saveMandate({ token } = {}) {
+    const value = String(token || "").trim();
+    this.state.mandate = value ? { kind: "demo-jwt", token: value.slice(0, 48) } : null;
+    this.persist();
+    return { ok: true, mandate: this.state.mandate ? { kind: "demo-jwt" } : null };
+  }
+
+  saveWebhook({ url } = {}) {
+    this.state.webhookUrl = String(url || "").trim();
+    this.persist();
+    this.render();
+    return { ok: true, webhookUrl: this.state.webhookUrl };
+  }
+
+  async confirmIfHuman(action, args) {
+    if (typeof StorePage.humanConfirm !== "function") {
+      return { ok: true };
+    }
+    return StorePage.humanConfirm(action, args);
+  }
+
   applyRollback(rollback) {
     if (rollback.action === "remove_from_cart") {
       this.removeFromCart(rollback.args.id, rollback.args.quantity);
@@ -706,6 +963,9 @@ export class StorePage {
     }
     if (rollback.action === "cancel_subscription") {
       this.state.subscription = rollback.args.previous;
+      if ("rooms" in (rollback.args || {})) this.state.rooms = clone(rollback.args.rooms || []);
+      if ("invoices" in (rollback.args || {})) this.state.invoices = clone(rollback.args.invoices || []);
+      if ("scenesUsed" in (rollback.args || {})) this.state.scenesUsed = rollback.args.scenesUsed;
       return;
     }
     if (rollback.action === "revoke_api_key") {
@@ -768,50 +1028,123 @@ export class StorePage {
     }
   }
 
+  bindChrome() {
+    const headerHost = el("site-header");
+    if (headerHost && !headerHost.dataset?.bound) {
+      headerHost.dataset.bound = "1";
+      const path = currentFile();
+      const hash = typeof location !== "undefined" ? location.hash : "";
+      const links = NAV.map((item) => {
+        const file = item.href.split("#")[0];
+        const itemHash = item.href.includes("#") ? `#${item.href.split("#")[1]}` : "";
+        const current = itemHash ? file === path && hash === itemHash : file === path;
+        return `<a href="${item.href}"${current ? ' aria-current="page"' : ""}>${item.label}</a>`;
+      });
+      headerHost.innerHTML = `
+        <nav class="nav-start">${links.slice(0, 3).join("")}</nav>
+        <a class="mark" href="index.html">meto</a>
+        <nav class="nav-end">
+          ${links.slice(3).join("")}
+          <a href="cart.html">Cart <span id="cart-count">0</span></a>
+        </nav>
+      `;
+    }
+    const footerHost = el("site-footer");
+    if (footerHost && !footerHost.dataset?.bound) {
+      footerHost.dataset.bound = "1";
+      footerHost.innerHTML = `
+        <p>Orra · dummy limestone shop for the Open Agentic Web Challenge. No real charges.</p>
+        <nav>
+          <a href="about.html">About</a>
+          <a href="blog.html">Notes</a>
+          <a href="legal.html">Terms</a>
+          <a href="permissions.html">Permissions</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="docs.html">Docs</a>
+          <a href="llms.txt">llms.txt</a>
+        </nav>
+      `;
+    }
+    const chipHost = el("seed-chips");
+    if (chipHost && !chipHost.dataset?.bound) {
+      chipHost.dataset.bound = "1";
+      chipHost.innerHTML = SEED_CHIPS.map(
+        (chip) => `<button type="button" class="chip" data-prompt="${chip.prompt}">${chip.prompt}</button>`,
+      ).join("");
+      chipHost.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-prompt]");
+        if (!button) return;
+        this.fillAssistantPrompt(button.dataset.prompt);
+      });
+    }
+  }
+
+  fillAssistantPrompt(prompt) {
+    const tryFill = () => {
+      const input = document.querySelector("#ns-input");
+      if (!input) return false;
+      input.value = prompt;
+      input.focus();
+      document.getElementById("assistant")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return true;
+    };
+    if (tryFill()) return;
+    if (typeof location !== "undefined" && !location.pathname.endsWith("index.html") && location.pathname !== "/") {
+      location.href = `index.html#assistant`;
+      sessionStorage.setItem("orra.prompt", prompt);
+      return;
+    }
+    const started = Date.now();
+    const timer = setInterval(() => {
+      if (tryFill() || Date.now() - started > 6000) clearInterval(timer);
+    }, 200);
+  }
+
   bind() {
-    const addButtons = document.querySelectorAll("[data-add]");
-    for (const button of addButtons) {
-      button.addEventListener("click", () => {
+    if (typeof document === "undefined") return;
+    if (typeof sessionStorage !== "undefined") {
+      const queued = sessionStorage.getItem("orra.prompt");
+      if (queued) {
+        sessionStorage.removeItem("orra.prompt");
+        this.fillAssistantPrompt(queued);
+      }
+    }
+    this.bindChrome();
+    this.bindShop();
+    this.bindProduct();
+    this.bindCartPage();
+    this.bindDocs();
+    if (!document.body.dataset.addBound) {
+      document.body.dataset.addBound = "1";
+      document.body.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-add]");
+        if (!button) return;
         const result = this.addToCart(button.getAttribute("data-add"), 1);
         this.note(result.ok ? "" : result.reason);
+        const cartNote = document.getElementById("cart-note");
+        if (cartNote) cartNote.textContent = result.ok ? `In the cart · ${this.getState().cart.total}` : result.reason;
       });
     }
-    const checkout = document.getElementById("checkout-form");
-    if (checkout) {
-      checkout.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const data = new FormData(checkout);
-        const result = this.checkout({
-          customerName: String(data.get("customerName") || ""),
-          fulfillment: String(data.get("fulfillment") || "pickup"),
-          expectedVersion: this.state.cart.version,
-          expectedTotalCents: this.cartTotalCents(),
-        });
-        const note = document.getElementById("checkout-note");
-        this.note(result.ok ? `Order ${result.order.id} received.` : result.reason);
-        if (note) {
-          note.textContent = result.ok ? `Order ${result.order.id} received.` : result.reason;
-        }
-      });
-    }
+    this.bindCheckoutForm(document.getElementById("checkout-form"));
     const login = document.getElementById("login-form");
-    if (login) {
+    if (login && !login.dataset.bound) {
+      login.dataset.bound = "1";
       login.addEventListener("submit", (event) => {
         event.preventDefault();
         const data = new FormData(login);
         const result = this.login(String(data.get("email") || ""), String(data.get("password") || ""));
         const note = document.getElementById("login-note");
-        if (note) {
-          note.textContent = result.ok ? `Signed in as ${result.user.name}.` : result.reason;
-        }
+        if (note) note.textContent = result.ok ? `Signed in as ${result.user.name}.` : result.reason;
       });
     }
     const logout = document.getElementById("logout-button");
-    if (logout) {
+    if (logout && !logout.dataset.bound) {
+      logout.dataset.bound = "1";
       logout.addEventListener("click", () => this.logout());
     }
     const constraints = document.getElementById("constraints-form");
-    if (constraints) {
+    if (constraints && !constraints.dataset.bound) {
+      constraints.dataset.bound = "1";
       constraints.addEventListener("submit", (event) => {
         event.preventDefault();
         const data = new FormData(constraints);
@@ -823,37 +1156,232 @@ export class StorePage {
       });
     }
     const undo = document.getElementById("undo-run");
-    if (undo) {
-      undo.addEventListener("click", () => this.undoRun());
-    }
-    const subscribe = document.querySelectorAll("[data-subscribe]");
-    for (const button of subscribe) {
-      button.addEventListener("click", () => {
-        const result = this.subscribe({ planId: button.getAttribute("data-subscribe") });
-        const note = document.getElementById("studio-note");
-        if (note) {
-          note.textContent = result.ok ? `Subscribed to ${result.subscription.planName}.` : result.reason;
+    if (undo && !undo.dataset.bound) {
+      undo.dataset.bound = "1";
+      undo.addEventListener("click", async () => {
+        const confirmed = await this.confirmIfHuman("undo_run", {});
+        const note = document.getElementById("undo-note") || document.getElementById("action-note");
+        if (!confirmed.ok) {
+          if (note) note.textContent = confirmed.reason;
+          return;
         }
+        const result = this.undoRun();
+        if (note) note.textContent = result.ok ? `Reversed: ${result.undone}` : result.reason;
+      });
+    }
+    const rollback = document.getElementById("rollback-step");
+    if (rollback && !rollback.dataset.bound) {
+      rollback.dataset.bound = "1";
+      rollback.addEventListener("click", async () => {
+        const confirmed = await this.confirmIfHuman("rollback_step", {});
+        const note = document.getElementById("undo-note") || document.getElementById("action-note");
+        if (!confirmed.ok) {
+          if (note) note.textContent = confirmed.reason;
+          return;
+        }
+        const result = this.rollbackStep();
+        if (note) note.textContent = result.ok ? `Reversed ${result.reversed}.` : result.reason;
+      });
+    }
+    for (const button of document.querySelectorAll("[data-subscribe]")) {
+      if (button.dataset.bound) continue;
+      button.dataset.bound = "1";
+      button.addEventListener("click", async () => {
+        const args = { planId: button.getAttribute("data-subscribe") };
+        const confirmed = await this.confirmIfHuman("subscribe_plan", args);
+        const note = document.getElementById("studio-note") || document.getElementById("subscription-status");
+        if (!confirmed.ok) {
+          if (note) note.textContent = confirmed.reason;
+          return;
+        }
+        const result = this.subscribe(args);
+        if (note) note.textContent = result.ok ? `Subscribed to ${result.subscription.planName}.` : result.reason;
       });
     }
     const mint = document.getElementById("mint-key-form");
-    if (mint) {
-      mint.addEventListener("submit", (event) => {
+    if (mint && !mint.dataset.bound) {
+      mint.dataset.bound = "1";
+      mint.addEventListener("submit", async (event) => {
         event.preventDefault();
         const data = new FormData(mint);
-        const result = this.createApiKey({ name: String(data.get("name") || "") });
+        const args = { name: String(data.get("name") || "") };
+        const confirmed = await this.confirmIfHuman("create_api_key", args);
         const note = document.getElementById("key-note");
-        if (note) {
-          note.textContent = result.ok ? `Key ${result.secretOnce} shown once.` : result.reason;
+        if (!confirmed.ok) {
+          if (note) note.textContent = confirmed.reason;
+          return;
         }
+        const result = this.createApiKey(args);
+        if (note) note.textContent = result.ok ? `Key ${result.secretOnce} shown once.` : result.reason;
+      });
+    }
+    const webhook = document.getElementById("webhook-form");
+    if (webhook && !webhook.dataset.bound) {
+      webhook.dataset.bound = "1";
+      webhook.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const data = new FormData(webhook);
+        this.saveWebhook({ url: data.get("url") });
       });
     }
     this.render();
   }
 
+  bindCheckoutForm(form) {
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = "1";
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const note = form.querySelector("[data-checkout-note]") || document.getElementById("checkout-note");
+      if (form.querySelector("[name=card]")) {
+        const tender = this.saveHumanTender({
+          number: data.get("card"),
+          expiry: data.get("expiry"),
+          cvv: data.get("cvv"),
+        });
+        if (!tender.ok) {
+          if (note) note.textContent = tender.reason;
+          return;
+        }
+      }
+      this.saveMandate({ token: data.get("mandate") });
+      const args = {
+        customerName: String(data.get("customerName") || data.get("name") || ""),
+        fulfillment: String(data.get("fulfillment") || "pickup"),
+        expectedVersion: this.state.cart.version,
+        expectedTotalCents: this.cartTotalCents(),
+      };
+      const confirmed = await this.confirmIfHuman("checkout_order", args);
+      if (!confirmed.ok) {
+        if (note) note.textContent = confirmed.reason;
+        return;
+      }
+      const result = this.checkout(args);
+      const message = result.ok
+        ? `Order ${result.order.id} received on ${result.order.tender.brand} ···· ${result.order.tender.last4}.`
+        : result.reason;
+      this.note(message);
+      if (note) note.textContent = message;
+    });
+  }
+
+  bindShop() {
+    const grid = el("shop-grid");
+    if (!grid) return;
+    const draw = () => {
+      const category = document.getElementById("shop-category")?.value || "";
+      const max = document.getElementById("shop-max")?.value;
+      const q = (document.getElementById("shop-q")?.value || "").toLowerCase();
+      const items = this.catalog.filter((item) => {
+        if (category && item.category !== category) return false;
+        if (max && item.priceCents > Number(max) * 100) return false;
+        if (q && !`${item.name} ${item.summary} ${item.category} ${item.materials}`.toLowerCase().includes(q)) {
+          return false;
+        }
+        return true;
+      });
+      grid.innerHTML = items.length
+        ? items.map((item) => this.productCard(item)).join("")
+        : `<p class="empty">Nothing in that cut of the floor.</p>`;
+    };
+    const filters = el("shop-filters");
+    if (filters && !filters.dataset.bound) {
+      filters.dataset.bound = "1";
+      filters.addEventListener("input", draw);
+      filters.addEventListener("change", draw);
+    }
+    draw();
+  }
+
+  bindProduct() {
+    const root = el("product-root");
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = "1";
+    const params = new URLSearchParams(typeof location !== "undefined" ? location.search : "");
+    const item = this.catalogItem(params.get("id"));
+    if (!item) {
+      root.innerHTML = `<p class="empty">That piece is not on the floor. <a href="shop.html">Back to the shop.</a></p>`;
+      return;
+    }
+    const related = this.relatedItems(item.id);
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: item.name,
+      description: item.summary,
+      sku: item.id,
+      material: item.materials,
+      offers: {
+        "@type": "Offer",
+        price: (item.priceCents / 100).toFixed(2),
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+      },
+    };
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.textContent = JSON.stringify(jsonLd);
+    document.head.append(script);
+    root.innerHTML = `
+      <div class="product-hero">
+        ${markSvg(item.mark)}
+        <div>
+          <p class="kicker">${item.category}</p>
+          <h1>${item.name}</h1>
+          <p class="lede">${item.summary}</p>
+          <p class="meta">${item.price} · ${item.materials} · ${item.dimensions} · ${item.stock} in dummy stock · ${item.lead}</p>
+          <button type="button" data-add="${item.id}">Add to cart</button>
+          <p class="note" id="cart-note"></p>
+        </div>
+      </div>
+      <section>
+        <h2>Notes from the floor</h2>
+        <ul class="reviews">${item.reviews.map((review) => `<li><strong>${review.by}</strong> · ${review.rating}/5<p>${review.text}</p></li>`).join("")}</ul>
+      </section>
+      <section>
+        <h2>Nearby</h2>
+        <div class="grid">${related.map((other) => this.productCard(other)).join("")}</div>
+      </section>
+    `;
+  }
+
+  bindCartPage() {
+    const root = el("cart-root");
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = "1";
+    root.addEventListener("click", (event) => {
+      const remove = event.target.closest("[data-remove]");
+      if (remove) this.removeFromCart(remove.dataset.remove, 99);
+    });
+    root.addEventListener("change", (event) => {
+      const qty = event.target.closest("[data-qty]");
+      if (!qty) return;
+      const next = Number(qty.value);
+      const items = this.state.cart.items.map((line) =>
+        line.id === qty.dataset.qty ? { id: line.id, quantity: next } : line,
+      );
+      this.setCart(items);
+    });
+    this.bindCheckoutForm(document.getElementById("cart-checkout"));
+  }
+
+  bindDocs() {
+    const list = el("cannot-do");
+    if (list && !list.dataset.bound) {
+      list.dataset.bound = "1";
+      list.innerHTML = CANNOT_DO.map((item) => `<li>${item}</li>`).join("");
+    }
+  }
+
   render() {
     if (typeof document === "undefined") {
       return;
+    }
+    try {
+      this.bindChrome();
+    } catch {
+      // The Node test document cannot search; chrome is a no-op there.
     }
     const state = this.getState();
     const count = document.getElementById("cart-count");
@@ -872,6 +1400,13 @@ export class StorePage {
         for (const line of state.cart.items) {
           const row = document.createElement("p");
           row.textContent = `${line.quantity} × ${line.name} — ${line.lineTotal}`;
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "ghost";
+          remove.dataset.remove = line.id;
+          remove.textContent = "Remove";
+          remove.addEventListener("click", () => this.removeFromCart(line.id, line.quantity));
+          row.append(" ", remove);
           cartBox.append(row);
         }
       }
@@ -902,32 +1437,153 @@ export class StorePage {
         ? `${state.latestOrder.id} · ${state.latestOrder.status} · ${state.latestOrder.total}`
         : "No orders yet.";
     }
-    const timeline = document.getElementById("run-timeline");
-    if (timeline) {
-      timeline.replaceChildren();
-      if (state.events.length === 0) {
-        const empty = document.createElement("p");
-        empty.textContent = "No agent steps yet.";
-        timeline.append(empty);
-      } else {
-        for (const event of state.events) {
-          const row = document.createElement("li");
-          const rollback = event.detail && event.detail.rollback ? ` · undo: ${event.detail.rollback.label || event.detail.rollback}` : "";
-          row.textContent = `${event.kind}: ${event.detail && event.detail.tool ? event.detail.tool : ""} ${rollback}`;
-          timeline.append(row);
-        }
-      }
-    }
+    this.renderTimeline(state);
+    this.renderCartPage(state);
+    this.renderStudio(state);
+    this.renderAccount(state);
+    this.renderPermissions(state);
     const secretBox = document.getElementById("key-note");
-    if (secretBox && this.state.lastKeySecret && !secretBox.textContent) {
-      secretBox.textContent = `Key ${this.state.lastKeySecret} shown once.`;
+    if (secretBox) {
+      if (this.state.lastKeySecret && !secretBox.textContent) {
+        secretBox.textContent = `Key ${this.state.lastKeySecret} shown once.`;
+      } else if (!this.state.lastKeySecret && /shown once/.test(secretBox.textContent)) {
+        secretBox.textContent = "Key revoked.";
+      }
     }
     const sub = document.getElementById("subscription-status");
     if (sub) {
       sub.textContent = state.subscription
-        ? `${state.subscription.planName} (${state.subscription.status})`
+        ? `${state.subscription.planName} (${state.subscription.status}) · ${state.scenesUsed}/${state.sceneCap} scenes`
         : "No Studio plan.";
     }
+  }
+
+  renderTimeline(state) {
+    const timeline = document.getElementById("run-timeline");
+    if (!timeline) return;
+    timeline.replaceChildren();
+    if (!state.events.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "No agent steps yet.";
+      timeline.append(empty);
+      return;
+    }
+    for (const event of state.events) {
+      const row = document.createElement("li");
+      const tool = event.detail && event.detail.tool ? event.detail.tool : "";
+      const reason = event.detail && event.detail.reason ? ` · ${event.detail.reason}` : "";
+      const rollback = event.detail && event.detail.rollback
+        ? ` · undo: ${event.detail.rollback.label || event.detail.rollback}`
+        : "";
+      const peer = event.detail && event.detail.peerOrigin ? ` · peer ${event.detail.peerOrigin}` : "";
+      const frozen = event.kind === "policy_frozen" && event.detail
+        ? ` · ${event.detail.mode || ""} cap ${event.detail.spendCap || ""}`
+        : "";
+      row.textContent = `${event.kind}: ${tool}${reason}${frozen}${rollback} · router ${event.host || routerHost()}${peer}`;
+      timeline.append(row);
+    }
+  }
+
+  renderCartPage(state) {
+    const root = el("cart-root");
+    if (!root) return;
+    if (!state.cart.items.length) {
+      root.innerHTML = `<p class="empty">The cart is empty. <a href="shop.html">Walk the shop.</a></p>`;
+      return;
+    }
+    root.innerHTML = `<ul class="cart-lines">${state.cart.items
+      .map((line) => {
+        const item = this.catalogItem(line.id);
+        if (!item) return "";
+        return `<li>
+          ${markSvg(item.mark)}
+          <div>
+            <a href="product.html?id=${item.id}">${item.name}</a>
+            <p class="meta">${item.price}</p>
+          </div>
+          <label>Qty <input data-qty="${item.id}" type="number" min="0" value="${line.quantity}"></label>
+          <button type="button" data-remove="${item.id}">Remove</button>
+        </li>`;
+      })
+      .join("")}</ul>
+      <p class="total">Total ${state.cart.total}</p>`;
+  }
+
+  renderStudio(state) {
+    const meter = el("usage-meter");
+    if (meter) {
+      const cap = state.sceneCap || 0;
+      const used = state.scenesUsed || 0;
+      const pct = cap ? Math.round((used / cap) * 100) : 0;
+      meter.innerHTML = state.subscription
+        ? `<div class="meter" role="meter" aria-valuenow="${used}" aria-valuemin="0" aria-valuemax="${cap}"><span style="width:${pct}%"></span></div><p>${used} of ${cap} dummy scenes this month.</p>`
+        : `<p>No plan yet.</p>`;
+    }
+    const invoices = el("invoice-list");
+    if (invoices) {
+      invoices.innerHTML = state.invoices.length
+        ? state.invoices.map((inv) => `<li>${inv.id} · ${inv.planName} · ${inv.total} · ${inv.status}</li>`).join("")
+        : `<li>No dummy invoices yet.</li>`;
+    }
+    const keys = el("key-list");
+    if (keys) {
+      keys.innerHTML = state.keys.length
+        ? state.keys.map((key) => `<li>${key.name} · ${key.prefix}</li>`).join("")
+        : `<li>No keys.</li>`;
+    }
+    const rooms = el("room-list");
+    if (rooms) {
+      rooms.innerHTML = state.rooms.length
+        ? state.rooms.map((room) => `<li>${room.name} · ${room.scenes.join(", ")}</li>`).join("")
+        : `<li>Rooms appear after a plan starts.</li>`;
+    }
+    const hook = el("webhook-url");
+    if (hook && document.activeElement !== hook) hook.value = state.webhookUrl || "";
+    const hookNote = el("webhook-note");
+    if (hookNote) {
+      hookNote.textContent = state.webhookUrl
+        ? `Stored locally. Orra will not POST to ${state.webhookUrl}.`
+        : "No webhook stored.";
+    }
+  }
+
+  renderAccount(state) {
+    const history = el("order-history");
+    if (history) {
+      history.innerHTML = state.orders.length
+        ? state.orders
+            .map((order) => {
+              const lines = (order.items || [])
+                .map((line) => `${line.quantity} × ${line.name || line.id}`)
+                .join(", ");
+              const last4 = order.tender && order.tender.last4 ? `${order.tender.brand} ···· ${order.tender.last4}` : "demo tender";
+              return `<li><strong>${order.id}</strong> · ${order.total} · ${order.fulfillment}<p>${lines}</p><p class="meta">${last4} · ${order.status}</p></li>`;
+            })
+            .join("")
+        : `<li>No orders yet.</li>`;
+    }
+    const tender = el("saved-tender");
+    if (tender) {
+      tender.textContent = state.tender
+        ? `${state.tender.brand} ···· ${state.tender.last4} (demo)`
+        : "No dummy tender saved.";
+    }
+  }
+
+  renderPermissions(state) {
+    const root = el("permissions-root");
+    if (!root) return;
+    const live = state.liveConstraints;
+    const frozen = state.frozenConstraints;
+    root.innerHTML = `
+      <dl class="facts">
+        <dt>Visitor</dt><dd>${state.user ? state.user.name : "signed out"}</dd>
+        <dt>Mode</dt><dd>${live.mode}</dd>
+        <dt>Spend cap</dt><dd>${money(live.spendCapCents)}</dd>
+        <dt>Allowed tools</dt><dd>${live.allowedTools.join(", ")}</dd>
+        <dt>Frozen snapshot</dt><dd>${frozen ? `${frozen.mode} · cap ${money(frozen.spendCapCents)} (a run has started)` : "None — constraints freeze on the first mutating spend or key."}</dd>
+      </dl>
+    `;
   }
 }
 
@@ -936,5 +1592,10 @@ export class App {
 }
 
 if (typeof window !== "undefined") {
-  App.page.bind();
+  import("./dialogs.js")
+    .then(({ confirmHuman }) => {
+      StorePage.humanConfirm = confirmHuman;
+      App.page.bind();
+    })
+    .catch(() => App.page.bind());
 }

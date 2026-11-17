@@ -4,13 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Terms — Orra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
   </head>
   <body>
     <div class="wrap">
-      <header class="site-header"><a class="mark" href="./index.html">Orra</a></header>
+      <header class="site-header" id="site-header"></header>
       <h1>Terms</h1>
-      <p>Demo storefront. Orders are fake. Keys are fake. Do not submit real payment data.</p>
+      <p class="lede">This is a demonstration storefront for the Open Agentic Web Challenge. It is not a shop that can take your money.</p>
+      <p>Orders are fake. Studio keys are fake. The card form stores a brand and last four digits in this browser, never a PAN or CVV. Do not submit real payment data.</p>
+      <p>The assistant sends the page’s public facts and your messages to the LLM provider you choose. It does not send card numbers. Other agent sites may fetch the public manifest. They do not receive your key.</p>
+      <p>Undo run reverses the ledger in this browser. There is no carrier, no bank, and no production webhook.</p>
+      <footer class="site-footer" id="site-footer"></footer>
     </div>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

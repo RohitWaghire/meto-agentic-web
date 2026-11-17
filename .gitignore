@@ -4,5 +4,6 @@ dist/
 .astro/
 .DS_Store
 *.log
+tmp-mcp*.json
 .impeccable/
 _vendor_src/

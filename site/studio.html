@@ -4,46 +4,68 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Studio — Orra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="wrap">
-      <header class="site-header">
-        <a class="mark" href="./index.html">Orra</a>
-        <nav>
-          <a href="./shop.html">Shop</a>
-          <a href="./studio.html">Studio</a>
-          <a href="./index.html#assistant">Ask Orra</a>
-        </nav>
-      </header>
+      <header class="site-header" id="site-header"></header>
       <h1>Orra Studio</h1>
-      <p class="lede">Dummy lighting-control SaaS. Plans and keys use the same functions the agent calls.</p>
+      <p class="lede">Dummy lighting-control SaaS. Plans, keys and webhooks use the same functions the agent calls. Compare plans on <a href="./pricing.html">Pricing</a>.</p>
       <p id="subscription-status">No Studio plan.</p>
       <div class="grid">
         <article class="piece">
           <h3>Starter</h3>
-          <p>$0.00 / month</p>
+          <p>$29.00 / month</p>
+          <p>One room, twelve scenes, one key.</p>
           <button type="button" data-subscribe="starter">Start Starter</button>
         </article>
         <article class="piece">
           <h3>Pro</h3>
-          <p>$29.00 / month</p>
+          <p>$79.00 / month</p>
+          <p>Four rooms, eighty scenes, dummy webhook.</p>
           <button type="button" data-subscribe="pro">Start Pro</button>
         </article>
         <article class="piece">
           <h3>Atelier</h3>
-          <p>$79.00 / month</p>
+          <p>$190.00 / month</p>
+          <p>The whole floor. Four hundred scenes.</p>
           <button type="button" data-subscribe="atelier">Start Atelier</button>
         </article>
       </div>
+      <section class="panel">
+        <h2>Usage</h2>
+        <div id="usage-meter"><p>No plan yet.</p></div>
+      </section>
+      <section class="work">
+        <div class="panel">
+          <h2>Invoices</h2>
+          <ul id="invoice-list"><li>No dummy invoices yet.</li></ul>
+        </div>
+        <div class="panel">
+          <h2>Rooms</h2>
+          <p>Display-only. The read tool already returns them.</p>
+          <ul id="room-list"><li>Rooms appear after a plan starts.</li></ul>
+        </div>
+      </section>
       <form id="mint-key-form" class="panel">
+        <h2>API keys</h2>
+        <ul id="key-list"><li>No keys.</li></ul>
         <label>Key name <input name="name" maxlength="40" value="demo"></label>
         <button type="submit">Mint dummy key</button>
         <p class="note" id="key-note"></p>
         <p class="note" id="studio-note"></p>
       </form>
-      <p><a href="./index.html#assistant">Ask the assistant to start Pro</a></p>
+      <form id="webhook-form" class="panel">
+        <h2>Dummy webhook</h2>
+        <p>Stored in this browser. Orra will not POST to it.</p>
+        <label>URL <input id="webhook-url" name="url" type="url" placeholder="https://example.test/hooks/orra"></label>
+        <button type="submit">Save webhook</button>
+        <p class="note" id="webhook-note"></p>
+      </form>
+      <footer class="site-footer" id="site-footer"></footer>
     </div>
     <script type="module" src="./app.js"></script>
   </body>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pricing — Orra Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Orra Studio",
+        "applicationCategory": "BusinessApplication",
+        "offers": [
+          { "@type": "Offer", "name": "Starter", "price": "29.00", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Pro", "price": "79.00", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Atelier", "price": "190.00", "priceCurrency": "USD" }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header" id="site-header"></header>
+      <h1>Studio plans</h1>
+      <p class="lede">Three dummy desks. Subscribe from this page or ask the assistant. The browser still asks before the plan starts.</p>
+      <div class="grid">
+        <article class="piece">
+          <h3>Starter</h3>
+          <p class="price">$29 / month</p>
+          <p>One room. Twelve scenes. One key. For a hallway you already know.</p>
+          <button type="button" data-subscribe="starter">Start Starter</button>
+        </article>
+        <article class="piece">
+          <h3>Pro</h3>
+          <p class="price">$79 / month</p>
+          <p>Four rooms. Eighty scenes. Three keys. A webhook URL you store locally.</p>
+          <button type="button" data-subscribe="pro">Start Pro</button>
+        </article>
+        <article class="piece">
+          <h3>Atelier</h3>
+          <p class="price">$190 / month</p>
+          <p>Twelve rooms. Four hundred scenes. Ten keys. A named desk.</p>
+          <button type="button" data-subscribe="atelier">Start Atelier</button>
+        </article>
+      </div>
+      <p class="note" id="studio-note"></p>
+      <p id="subscription-status">No Studio plan.</p>
+      <p><a href="./studio.html">Open the Studio dashboard</a></p>
+      <footer class="site-footer" id="site-footer"></footer>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

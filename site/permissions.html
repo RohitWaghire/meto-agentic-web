@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Permissions — Orra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="site-header" id="site-header"></header>
+      <h1>Account / permissions</h1>
+      <p class="lede">Mode, spend cap and allowed tools live on the page object. A run freezes a snapshot so the agent cannot widen them mid-errand.</p>
+      <div id="permissions-root" class="panel"></div>
+      <form id="constraints-form" class="panel">
+        <h2>Change live constraints</h2>
+        <p class="note">Saving here does not thaw a frozen run. Undo run clears the snapshot.</p>
+        <label>Mode
+          <select id="constraint-mode" name="mode">
+            <option value="always_ask">always_ask</option>
+            <option value="auto_within_policy">auto_within_policy</option>
+          </select>
+        </label>
+        <label>Spend cap (USD)
+          <input id="spend-cap" name="spendCap" type="number" min="0" max="10000" step="1">
+        </label>
+        <button type="submit">Save constraints</button>
+      </form>
+      <p id="constraint-summary"></p>
+      <footer class="site-footer" id="site-footer"></footer>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

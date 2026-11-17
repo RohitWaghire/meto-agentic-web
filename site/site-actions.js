@@ -10,6 +10,7 @@ class SiteActions {
     actions.register(SiteActions.subscribeAction());
     actions.register(SiteActions.createKeyAction());
     actions.register(SiteActions.undoRunAction());
+    actions.register(SiteActions.rollbackStepAction());
   }
 
   static readStateAction() {
@@ -252,6 +253,25 @@ class SiteActions {
 
   static undoRun() {
     return App.page.undoRun();
+  }
+
+  static rollbackStepAction() {
+    return {
+      name: "rollback_step",
+      description:
+        "Reverse only the most recent mutating step on this page, using the compensating action already named on that receipt. The browser asks the visitor to confirm first. Leaves earlier steps in place. Returns what was undone.",
+      effect: "irreversible",
+      inputSchema: {
+        type: "object",
+        properties: {},
+        additionalProperties: false,
+      },
+      execute: SiteActions.rollbackStep,
+    };
+  }
+
+  static rollbackStep() {
+    return App.page.rollbackStep();
   }
 }
 

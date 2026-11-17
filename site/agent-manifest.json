@@ -30,7 +30,7 @@
   "peer_policy": {
     "mode": "closed",
     "deny_origins": [],
-    "note": "Orra Freight on loopback is the only partner until you replace the URL for production."
+    "note": "Orra Freight is a second origin. Keep http://127.0.0.1:8081 for local npm run freight. Add the public HTTPS origin after Render deploy."
   },
   "agent_mcp": {
     "protocol": "nsdeploy-agent-mcp/v1",
@@ -80,7 +80,8 @@
       "checkout_order",
       "subscribe_plan",
       "create_api_key",
-      "undo_run"
+      "undo_run",
+      "rollback_step"
     ]
   }
 }
