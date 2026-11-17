@@ -1,10 +1,10 @@
 {
-  "brand": "Orra Assistant",
+  "brand": "meto Assistant",
   "networks": [
     {
-      "name": "orra_concierge",
-      "front_man": "orra_concierge",
-      "hocon": "./orra_concierge.network.json",
+      "name": "meto_concierge",
+      "front_man": "meto_concierge",
+      "hocon": "./meto_concierge.network.json",
       "description": "Ask about the catalog, keep to your spend cap, and place a demo order or Studio plan after you confirm.",
       "tags": [
         "agentified-website",
@@ -30,12 +30,12 @@
   "peer_policy": {
     "mode": "closed",
     "deny_origins": [],
-    "note": "Orra Freight is a second origin. Keep http://127.0.0.1:8081 for local npm run freight. Add the public HTTPS origin after Render deploy."
+    "note": "meto Freight is a second origin. Keep http://127.0.0.1:8081 for local npm run freight. Add the public HTTPS origin after Render deploy."
   },
   "agent_mcp": {
     "protocol": "nsdeploy-agent-mcp/v1",
-    "network": "orra_concierge",
-    "front_man": "orra_concierge",
+    "network": "meto_concierge",
+    "front_man": "meto_concierge",
     "available": true,
     "url": "/mcp",
     "reason": "Same-origin MCP facade on the Astro Node host. Token-less callers may only read."
@@ -47,12 +47,12 @@
     "protocol": "nsdeploy-link/v1",
     "exports": [
       {
-        "network": "orra_concierge",
-        "front_man": "orra_concierge",
+        "network": "meto_concierge",
+        "front_man": "meto_concierge",
         "aliases": [
-          "orra_concierge"
+          "meto_concierge"
         ],
-        "url": "orra_concierge"
+        "url": "meto_concierge"
       }
     ],
     "imports": [],

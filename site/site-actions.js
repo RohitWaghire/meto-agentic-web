@@ -161,7 +161,7 @@ class SiteActions {
           fulfillment: {
             type: "string",
             enum: ["pickup", "delivery"],
-            description: "Pickup at the studio or dummy delivery via Orra Freight.",
+            description: "Pickup at the studio or dummy delivery via meto Freight.",
           },
           expectedVersion: {
             type: "integer",
@@ -187,7 +187,7 @@ class SiteActions {
     return {
       name: "subscribe_plan",
       description:
-        "Start a dummy Orra Studio plan. The browser asks the visitor to confirm first and names how to cancel. Returns the subscription receipt.",
+        "Start a dummy meto Studio plan. The browser asks the visitor to confirm first and names how to cancel. Returns the subscription receipt.",
       effect: "irreversible",
       inputSchema: {
         type: "object",

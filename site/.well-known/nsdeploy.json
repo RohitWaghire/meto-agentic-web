@@ -2,12 +2,12 @@
   "protocol": "nsdeploy-link/v1",
   "exports": [
     {
-      "network": "orra_concierge",
-      "front_man": "orra_concierge",
+      "network": "meto_concierge",
+      "front_man": "meto_concierge",
       "aliases": [
-        "orra_concierge"
+        "meto_concierge"
       ],
-      "url": "orra_concierge"
+      "url": "meto_concierge"
     }
   ],
   "imports": [],

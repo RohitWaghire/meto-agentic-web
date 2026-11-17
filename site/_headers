@@ -2,7 +2,7 @@
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, OPTIONS
 
-/orra_concierge.network.json
+/meto_concierge.network.json
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, OPTIONS
 

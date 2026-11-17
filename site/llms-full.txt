@@ -1,6 +1,6 @@
-# Orra
+# meto
 
-Dummy lighting shop and Orra Studio SaaS. Agents run in the visitor browser from orra_concierge.network.json. Mutations go through App.page. Spend caps refuse over-limit checkout. Undo reverses the ledger.
+Dummy lighting shop and meto Studio SaaS. Agents run in the visitor browser from meto_concierge.network.json. Mutations go through App.page. Spend caps refuse over-limit checkout. Undo reverses the ledger.
 
 Catalog: Arc Sconce $172, Mill Pendant $240, Grove Floor Lamp $410, Linen Throw $86, Kiln Bowl $54, North Rug $320.
 

@@ -2,7 +2,7 @@ import { defineMiddleware } from "astro:middleware";
 
 const corsPaths = [
   "/agent-manifest.json",
-  "/orra_concierge.network.json",
+  "/meto_concierge.network.json",
   "/links.json",
   "/agent-mcp.json",
   "/llms.txt",

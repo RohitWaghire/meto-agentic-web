@@ -1,6 +1,6 @@
 {
     "metadata": {
-        "description": "Quote dummy Orra Freight delivery windows. This network has no booking tools.",
+        "description": "Quote dummy meto Freight delivery windows. This network has no booking tools.",
         "sample_queries": [
             "What delivery windows do you offer?",
             "How do I book a delivery?",
@@ -13,7 +13,7 @@
     "max_steps": 8,
     "commondefs": {
         "replacement_strings": {
-            "site_name": "Orra Freight",
+            "site_name": "meto Freight",
             "grounding_rules": """
 Facts come only from these instructions and from this conversation.
 Never invent prices other than the two dummy windows below.
@@ -32,7 +32,7 @@ When you have no website_* tools, another site's assistant is asking for its vis
         {
             "name": "freight_guide",
             "function": {
-                "description": "Explain Orra Freight dummy delivery windows and point to the Freight page.",
+                "description": "Explain meto Freight dummy delivery windows and point to the Freight page.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -45,7 +45,7 @@ When you have no website_* tools, another site's assistant is asking for its vis
                 }
             },
             "instructions": """
-You are the assistant on the {site_name} website. You quote two dummy delivery windows for Orra lamps and objects.
+You are the assistant on the {site_name} website. You quote two dummy delivery windows for meto lamps and objects.
 {grounding_rules}
 How to work:
 - Local: 3 to 5 days, $18.00.

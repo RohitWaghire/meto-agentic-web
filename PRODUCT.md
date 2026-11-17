@@ -19,7 +19,7 @@ delegated: Astro 5 with the Node adapter for the MCP facade and dummy APIs; the 
 
 ## Product Purpose
 
-Orra is a dummy contemporary lighting shop plus Orra Studio (a dummy lighting-control SaaS). Its job is to let a visitor-owned browser agent complete a real site task end-to-end inside explicit permission constraints, with every step, approval, and rollback path visible.
+meto is a dummy contemporary lighting shop plus meto Studio (a dummy lighting-control SaaS). Its job is to let a visitor-owned browser agent complete a real site task end-to-end inside explicit permission constraints, with every step, approval, and rollback path visible.
 
 Success: a judge can paste a BYOK key, set a cap, ask the assistant to buy the Arc Sconce, see the confirmation name the rollback, approve, watch the cart and order update, then undo the run.
 

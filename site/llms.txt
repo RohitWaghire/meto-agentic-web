@@ -1,13 +1,13 @@
-# Orra
+# meto
 
 > Lighting and objects with a permissioned in-browser agent. Dummy catalog. No real charges.
 
-Orra is an Open Agentic Web site. Agents run in the visitor's browser from published JSON, using the visitor's LLM key.
+meto is an Open Agentic Web site. Agents run in the visitor's browser from published JSON, using the visitor's LLM key.
 
 ## For agents
 
 - [Agent manifest](./agent-manifest.json)
-- [Network](./orra_concierge.network.json)
+- [Network](./meto_concierge.network.json)
 - [How to act](./agents.md)
 - [Markdown home](./index.md)
 - [MCP](./mcp) (same origin; register first at /api/v1/agents/register)

@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 
 const corsPrefixes = [
   "/agent-manifest.json",
-  "/orra_concierge.network.json",
+  "/meto_concierge.network.json",
   "/links.json",
   "/agent-mcp.json",
   "/llms.txt",
@@ -42,7 +42,7 @@ function agentCors() {
     next();
   };
   return {
-    name: "orra-agent-cors",
+    name: "meto-agent-cors",
     configureServer(server) {
       server.middlewares.use(middleware);
     },

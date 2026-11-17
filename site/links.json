@@ -1,7 +1,7 @@
 {
   "version": 1,
   "networks": {
-    "orra_concierge": {
+    "meto_concierge": {
       "freight": "http://127.0.0.1:8081/freight_guide"
     }
   }

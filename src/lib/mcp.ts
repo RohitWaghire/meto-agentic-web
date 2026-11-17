@@ -16,7 +16,7 @@ type Rpc = { jsonrpc?: string; id?: string | number | null; method?: string; par
 const publicTools = [
   {
     name: "search_catalog",
-    description: "Search the dummy Orra catalog by name, category, or material. Token-less.",
+    description: "Search the dummy meto catalog by name, category, or material. Token-less.",
     inputSchema: {
       type: "object",
       properties: { query: { type: "string" } },
@@ -77,7 +77,7 @@ export function handleMcp(body: Rpc, authHeader: string | null, paymentSignature
       status: 200,
       json: result(body.id, {
         protocolVersion: "2025-03-26",
-        serverInfo: { name: "orra", version: "1.0.0" },
+        serverInfo: { name: "meto", version: "1.0.0" },
         capabilities: { tools: {} },
       }),
     };
@@ -131,7 +131,7 @@ export function handleMcp(body: Rpc, authHeader: string | null, paymentSignature
               data: {
                 rail: "x402-shaped",
                 amount: product.price,
-                payTo: "orra-demo",
+                payTo: "meto-demo",
                 hint: "Retry with header PAYMENT-SIGNATURE: demo-usdc",
               },
             },
@@ -172,8 +172,8 @@ export function handleMcp(body: Rpc, authHeader: string | null, paymentSignature
       json: result(body.id, {
         resources: tenant
           ? [
-              { uri: "orra://orders", name: "Server twin orders" },
-              { uri: "orra://subscription", name: "Server twin subscription" },
+              { uri: "meto://orders", name: "Server twin orders" },
+              { uri: "meto://subscription", name: "Server twin subscription" },
             ]
           : [],
       }),
@@ -185,10 +185,10 @@ export function handleMcp(body: Rpc, authHeader: string | null, paymentSignature
       return { status: 200, json: error(body.id, -32001, "Bearer required to read twin resources.") };
     }
     const uri = String((body.params || {}).uri || "");
-    if (uri === "orra://orders") {
+    if (uri === "meto://orders") {
       return { status: 200, json: textResult(body.id, twinOrdersFor(tenant.tenantId)) };
     }
-    if (uri === "orra://subscription") {
+    if (uri === "meto://subscription") {
       return { status: 200, json: textResult(body.id, twinSubscriptionFor(tenant.tenantId)) };
     }
     return { status: 200, json: error(body.id, -32602, "Unknown resource") };

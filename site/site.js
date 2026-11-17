@@ -3,7 +3,7 @@ import { DIALOGS, reviewDetails, dialogContent, openDialog, confirmHuman } from 
 
 export class AssistantMount {
   static GREETING =
-    "I can read Orra's catalog and your cart, add pieces you ask for, and place a demo order or Studio plan after you confirm. You set the spend cap. I will not ask for card numbers.";
+    "I can read meto's catalog and your cart, add pieces you ask for, and place a demo order or Studio plan after you confirm. You set the spend cap. I will not ask for card numbers.";
 
   static DIALOGS = DIALOGS;
 

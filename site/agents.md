@@ -1,11 +1,11 @@
 # Agents.md
 
-Orra treats visiting agents as customers with a mandate, not as bots to scrape HTML.
+meto treats visiting agents as customers with a mandate, not as bots to scrape HTML.
 
 ## Discover
 
 1. GET `/agent-manifest.json` (CORS).
-2. Load `orra_concierge.network.json` in a spec runtime, or talk to humans via the page assistant.
+2. Load `meto_concierge.network.json` in a spec runtime, or talk to humans via the page assistant.
 3. Optional: `POST /api/v1/agents/register` then `POST /mcp`.
 
 ## Act
@@ -16,6 +16,6 @@ Never send PAN/CVV. Use the saved demo tender. `rollback_step` reverses only the
 
 ## Demo
 
-- Maya: `maya@orra.example` / `demo1234` — $100 cap, always_ask
-- Julian: `julian@orra.example` / `studio1234` — $500 cap
+- Maya: `maya@meto.example` / `demo1234` — $100 cap, always_ask
+- Julian: `julian@meto.example` / `studio1234` — $500 cap
 - Freight partner (local): `http://127.0.0.1:8081/freight_guide`

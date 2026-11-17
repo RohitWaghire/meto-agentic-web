@@ -1,7 +1,7 @@
-# Orra concierge. Source of truth for orra_concierge.network.json.
+# meto concierge. Source of truth for meto_concierge.network.json.
 {
     "metadata": {
-        "description": "Help visitors shop Orra lighting and objects, respect their spend cap, and start a dummy Studio plan.",
+        "description": "Help visitors shop meto lighting and objects, respect their spend cap, and start a dummy Studio plan.",
         "sample_queries": [
             "What wall lights cost less than $180?",
             "Add the Arc Sconce to my cart",
@@ -21,12 +21,12 @@
     },
 
     "link_labels": {
-        "http://127.0.0.1:8081/freight_guide": "Orra Freight"
+        "http://127.0.0.1:8081/freight_guide": "meto Freight"
     },
 
     "commondefs": {
         "replacement_strings": {
-            "site_name": "Orra",
+            "site_name": "meto",
 
             "grounding_rules": """
 Facts come only from website_* tool results and from this conversation.
@@ -69,9 +69,9 @@ Do not ask the visitor to confirm an irreversible action, in chat or with a conf
 
     "tools": [
         {
-            "name": "orra_concierge",
+            "name": "meto_concierge",
             "function": {
-                "description": "Help a visitor shop Orra lighting, textiles and objects, respect their permission cap, place a demo order, or start Orra Studio.",
+                "description": "Help a visitor shop meto lighting, textiles and objects, respect their permission cap, place a demo order, or start meto Studio.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -107,7 +107,7 @@ How to work:
         {
             "name": "catalog_specialist",
             "function": {
-                "description": "Explain Orra pieces, materials, stock and prices from the current page state.",
+                "description": "Explain meto pieces, materials, stock and prices from the current page state.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -131,7 +131,7 @@ How to work:
         {
             "name": "studio_specialist",
             "function": {
-                "description": "Explain Orra Studio plans, the current subscription and key prefixes from the page state.",
+                "description": "Explain meto Studio plans, the current subscription and key prefixes from the page state.",
                 "parameters": {
                     "type": "object",
                     "properties": {

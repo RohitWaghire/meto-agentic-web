@@ -1,11 +1,11 @@
 {
-  "brand": "Orra Freight",
+  "brand": "meto Freight",
   "networks": [
     {
       "name": "freight_guide",
       "front_man": "freight_guide",
       "hocon": "./freight_guide.network.json",
-      "description": "Dummy delivery windows for Orra. This network cannot book.",
+      "description": "Dummy delivery windows for meto. This network cannot book.",
       "tags": ["agentified-website"],
       "sample_queries": [
         "What delivery windows do you offer?",

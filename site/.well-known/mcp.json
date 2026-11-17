@@ -1,6 +1,6 @@
 {
-  "name": "orra",
-  "description": "Orra catalog, demo checkout, and run inspection for AI agents",
+  "name": "meto",
+  "description": "meto catalog, demo checkout, and run inspection for AI agents",
   "version": "1.0.0",
   "remotes": [
     { "type": "streamable-http", "url": "/mcp" }

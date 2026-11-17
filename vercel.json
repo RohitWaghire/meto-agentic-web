@@ -5,7 +5,7 @@
       "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
     },
     {
-      "source": "/orra_concierge.network.json",
+      "source": "/meto_concierge.network.json",
       "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
     },
     {

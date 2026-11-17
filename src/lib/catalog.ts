@@ -115,7 +115,7 @@ const subscriptions = new Map<string, TwinSubscription>();
 
 export function registerAgent(agentName: string, agentType: string, callbackUrl: string) {
   const tenantId = `tnt_${tenants.size + 1}`;
-  const apiKey = `orra_live_${Math.random().toString(36).slice(2, 14)}`;
+  const apiKey = `meto_live_${Math.random().toString(36).slice(2, 14)}`;
   const tenant: Tenant = {
     tenantId,
     agentName: agentName || "unnamed-agent",
@@ -139,7 +139,7 @@ export function tenantFromAuth(header: string | null) {
     return null;
   }
   const token = header.replace(/^Bearer\s+/i, "");
-  return tenants.get(token) || (token === "orra_live_demo"
+  return tenants.get(token) || (token === "meto_live_demo"
     ? { tenantId: "tnt_demo", agentName: "procurement-bot-v2", apiKey: token, createdAt: "2026-11-16" }
     : null);
 }

@@ -11,4 +11,4 @@
 - `byok.png` — Otari default + paste-key BYOK panel
 - `confirm-rollback.png` — irreversible dialog listing items, total, and rollback
 - `rollback-step.png` — Undo last step applied; only the latest ledger entry reversed
-- `freight.png` — Orra Freight on `http://127.0.0.1:8081` (second origin, no shop tools)
+- `freight.png` — meto Freight on `http://127.0.0.1:8081` (second origin, no shop tools)

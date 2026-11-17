@@ -3,7 +3,7 @@
 # site/links.json. Keep http://127.0.0.1:8081 for local `npm run freight`.
 services:
   - type: web
-    name: orra
+    name: meto
     runtime: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
@@ -13,10 +13,10 @@ services:
       - key: HOST
         value: 0.0.0.0
   - type: web
-    name: orra-freight
+    name: meto-freight
     runtime: static
     buildCommand: echo freight-static
-    staticPublishPath: sites/orra-freight
+    staticPublishPath: sites/meto-freight
     headers:
       - path: /*
         name: Access-Control-Allow-Origin

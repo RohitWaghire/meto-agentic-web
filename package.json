@@ -1,9 +1,9 @@
 {
-  "name": "orra-agentic-web",
+  "name": "meto-agentic-web",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Orra — permissioned agentic commerce site for the Open Agentic Web Challenge",
+  "description": "meto — permissioned agentic commerce site for the Open Agentic Web Challenge",
   "license": "MIT",
   "engines": {
     "node": ">=22"
@@ -13,10 +13,10 @@
     "build": "npm run agent:build && astro build",
     "preview": "astro preview",
     "start": "node dist/server/entry.mjs",
-    "agent:build": "node vendor/agentify-website/scripts/build_network.mjs site/orra_concierge.hocon --manifest site/agent-manifest.json --runtime site/runtime && node vendor/agentify-website/scripts/build_network.mjs sites/orra-freight/freight_guide.hocon --manifest sites/orra-freight/agent-manifest.json --runtime sites/orra-freight/runtime",
-    "agent:check": "node vendor/agentify-website/scripts/build_network.mjs site/orra_concierge.hocon --manifest site/agent-manifest.json --runtime site/runtime --check",
+    "agent:build": "node vendor/agentify-website/scripts/build_network.mjs site/meto_concierge.hocon --manifest site/agent-manifest.json --runtime site/runtime && node vendor/agentify-website/scripts/build_network.mjs sites/meto-freight/freight_guide.hocon --manifest sites/meto-freight/agent-manifest.json --runtime sites/meto-freight/runtime",
+    "agent:check": "node vendor/agentify-website/scripts/build_network.mjs site/meto_concierge.hocon --manifest site/agent-manifest.json --runtime site/runtime --check",
     "test": "npm run agent:build && node --test \"site/tests/*.test.mjs\"",
-    "freight": "node vendor/agentify-website/scripts/serve_site.mjs sites/orra-freight --host 127.0.0.1 --port 8081",
+    "freight": "node vendor/agentify-website/scripts/serve_site.mjs sites/meto-freight --host 127.0.0.1 --port 8081",
     "serve:static": "node vendor/agentify-website/scripts/serve_site.mjs site --host 127.0.0.1 --port 8080"
   },
   "dependencies": {

@@ -15,7 +15,7 @@ import { StubOption } from "./stub_option.mjs";
 import { ScriptedModel } from "./scripted_model.mjs";
 
 // TODO: set these for the site.
-const NETWORK_NAME = "orra_concierge";
+const NETWORK_NAME = "meto_concierge";
 const READ_ACTION = "get_store_state";
 const WRITE_ACTION = "add_to_cart";
 const IRREVERSIBLE_ACTION = "checkout_order";

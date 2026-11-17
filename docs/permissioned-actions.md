@@ -8,4 +8,4 @@ A pattern other agentic websites can copy.
 4. Store a ledger of `{tool, args, rollback}`. Undo walks it in reverse. `rollback_step` reverses only the last entry.
 5. Put spend caps in the page object, not in the model instructions.
 
-Orra implements this in `site/app.js` and `site/site-actions.js`.
+meto implements this in `site/app.js` and `site/site-actions.js`.

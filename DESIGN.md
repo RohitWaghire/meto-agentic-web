@@ -2,7 +2,7 @@
 
 ## World
 
-Hangline’s small-batch shop, translated onto Orra’s lamps: sage paper with a pin-dot grid, a forest-green script mark, garments replaced by line elevations of sconces and throws. Cool daylight on cotton-paper, not limestone benches and not a purple SaaS dashboard.
+Hangline’s small-batch shop, translated onto meto's lamps: sage paper with a pin-dot grid, a forest-green script mark, garments replaced by line elevations of sconces and throws. Cool daylight on cotton-paper, not limestone benches and not a purple SaaS dashboard.
 
 Light: even showroom daylight. The site is light because the rack sits on that paper.
 

@@ -113,7 +113,7 @@ export const PLANS = [
 
 export const DEMO_USERS = [
   {
-    email: "maya@orra.example",
+    email: "maya@meto.example",
     password: "demo1234",
     name: "Maya Chen",
     role: "shopper",
@@ -126,7 +126,7 @@ export const DEMO_USERS = [
     },
   },
   {
-    email: "julian@orra.example",
+    email: "julian@meto.example",
     password: "studio1234",
     name: "Julian Vale",
     role: "studio",
@@ -148,7 +148,7 @@ export const DEMO_USERS = [
     },
   },
   {
-    email: "ada@orra.example",
+    email: "ada@meto.example",
     password: "admin1234",
     name: "Ada Rohan",
     role: "admin",
@@ -190,7 +190,7 @@ const NAV = [
   { href: "studio.html", label: "Studio" },
   { href: "account.html", label: "Account" },
   { href: "docs.html", label: "Docs" },
-  { href: "index.html#assistant", label: "Ask Orra" },
+  { href: "index.html#assistant", label: "Ask meto" },
 ];
 
 const SEED_CHIPS = [
@@ -323,7 +323,7 @@ export class StorePage {
   }
 
   hydrate() {
-    const raw = this.storage.getItem("orra.v1");
+    const raw = this.storage.getItem("meto.v1");
     if (!raw) {
       return;
     }
@@ -336,7 +336,7 @@ export class StorePage {
   }
 
   persist() {
-    this.storage.setItem("orra.v1", JSON.stringify(this.state));
+    this.storage.setItem("meto.v1", JSON.stringify(this.state));
   }
 
   catalogIds() {
@@ -542,7 +542,7 @@ export class StorePage {
       events: clone(this.state.events).slice(0, 12),
       cannotDo: CANNOT_DO.slice(),
       freight: {
-        name: "Orra Freight",
+        name: "meto Freight",
         page: "http://127.0.0.1:8081/",
         network: "http://127.0.0.1:8081/freight_guide",
       },
@@ -815,7 +815,7 @@ export class StorePage {
       return check;
     }
     this.freezeConstraints();
-    const secret = `orra_live_${Math.random().toString(36).slice(2, 12)}`;
+    const secret = `meto_live_${Math.random().toString(36).slice(2, 12)}`;
     const record = {
       id: `key_${this.state.keys.length + 1}`,
       name: check.name,
@@ -1053,7 +1053,7 @@ export class StorePage {
     if (footerHost && !footerHost.dataset?.bound) {
       footerHost.dataset.bound = "1";
       footerHost.innerHTML = `
-        <p>Orra · dummy limestone shop for the Open Agentic Web Challenge. No real charges.</p>
+        <p>meto · dummy limestone shop for the Open Agentic Web Challenge. No real charges.</p>
         <nav>
           <a href="about.html">About</a>
           <a href="blog.html">Notes</a>
@@ -1091,7 +1091,7 @@ export class StorePage {
     if (tryFill()) return;
     if (typeof location !== "undefined" && !location.pathname.endsWith("index.html") && location.pathname !== "/") {
       location.href = `index.html#assistant`;
-      sessionStorage.setItem("orra.prompt", prompt);
+      sessionStorage.setItem("meto.prompt", prompt);
       return;
     }
     const started = Date.now();
@@ -1103,9 +1103,9 @@ export class StorePage {
   bind() {
     if (typeof document === "undefined") return;
     if (typeof sessionStorage !== "undefined") {
-      const queued = sessionStorage.getItem("orra.prompt");
+      const queued = sessionStorage.getItem("meto.prompt");
       if (queued) {
-        sessionStorage.removeItem("orra.prompt");
+        sessionStorage.removeItem("meto.prompt");
         this.fillAssistantPrompt(queued);
       }
     }
@@ -1542,7 +1542,7 @@ export class StorePage {
     const hookNote = el("webhook-note");
     if (hookNote) {
       hookNote.textContent = state.webhookUrl
-        ? `Stored locally. Orra will not POST to ${state.webhookUrl}.`
+        ? `Stored locally. meto will not POST to ${state.webhookUrl}.`
         : "No webhook stored.";
     }
   }
